@@ -7,6 +7,7 @@ const Product = require('./models/Product')
 
 //associations could go here!
 //They should have a Many-Many relationship
+//How to view the magic methods: console.log('Magic Methods: ', Object.getPrototypeOf(User))
 User.hasMany(Product, { through: 'UserProduct' });
 Product.belongsToMany(User, { through: 'UserProduct' });
 
