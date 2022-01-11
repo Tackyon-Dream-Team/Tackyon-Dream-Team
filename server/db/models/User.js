@@ -44,6 +44,17 @@ const User = db.define('user', {
       isEmail: true,
       notEmpty: true
     }
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    defaultValue: 'https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png',
+    validate: {
+      isURL: true
+    }
+  },
+  admin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 
