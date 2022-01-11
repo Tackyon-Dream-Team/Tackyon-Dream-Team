@@ -80,7 +80,11 @@ async function seed() {
       quantity: 10,
     }),
   ]);
+  await products[0].addUser(users[0]);
+  await products[0].addUser(users[0]);
 
+  console.log(Object.getPrototypeOf(users[0]));
+  console.log(Object.getPrototypeOf(products[0]));
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
