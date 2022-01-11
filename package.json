@@ -1,7 +1,7 @@
 {
-  "name": "fs-app-template",
+  "name": "Tackyon-Dream-Team",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "Shopping paradise for Online Users. Selling outdoor equipment.",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -17,7 +17,7 @@
     "test:dev:models": "npm run test:dev -- --grep=model",
     "test:dev:routes": "npm run test:dev -- --grep=route"
   },
-  "author": "Fullstack Academy of Code",
+  "author": "Jack, Jay, Johnny, and David",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
