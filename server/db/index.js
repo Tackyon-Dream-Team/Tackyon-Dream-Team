@@ -5,7 +5,7 @@ const db = require("./db");
 const User = require("./models/User");
 const Product = require("./models/Product");
 const Cart = require("./models/Cart");
-const Order = require("./models/order")
+const Order = require("./models/Order")
 
 //associations could go here!
 //They should have a Many-Many relationship
