@@ -15,9 +15,15 @@ Cart.belongsTo(User);
 User.hasOne(Cart);
 
 
+Cart.belongsToMany(Product, { through: 'cartProduct' });
+Product.belongsToMany(Cart, { through: 'cartProduct' }); //*******subject to change*******
 
-Cart.belongsToMany(Product, { through: Order });
-Product.belongsToMany(Cart, { through: Order }); //*******subject to change*******
+User.hasMany(Order);
+Order.belongsTo(User);
+
+Order.belongsToMany(Product, {through: "productOrder"});
+Product.belongsToMany(Order, {through: "productOrder"});
+
 
 module.exports = {
   db,
