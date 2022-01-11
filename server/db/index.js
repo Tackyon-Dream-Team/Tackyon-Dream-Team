@@ -1,15 +1,15 @@
 //this is the access point for all things database related!
 
-const db = require('./db')
+const db = require("./db");
 
-const User = require('./models/User')
-const Product = require('./models/Product')
+const User = require("./models/User");
+const Product = require("./models/Product");
 
 //associations could go here!
 //They should have a Many-Many relationship
 //How to view the magic methods: console.log('Magic Methods: ', Object.getPrototypeOf(User))
-User.hasMany(Product, { through: 'UserProduct' });
-Product.belongsToMany(User, { through: 'UserProduct' });
+User.belongsToMany(Product, { through: "UserProduct" });
+Product.belongsToMany(User, { through: "UserProduct" });
 
 module.exports = {
   db,
@@ -17,4 +17,4 @@ module.exports = {
     User,
     Product,
   },
-}
+};
