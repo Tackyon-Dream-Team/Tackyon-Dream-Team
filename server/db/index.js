@@ -9,8 +9,12 @@ const Cart = require("./models/Cart");
 //associations could go here!
 //They should have a Many-Many relationship
 //How to view the magic methods: console.log('Magic Methods: ', Object.getPrototypeOf(User))
-User.belongsToMany(Product, { through: "UserProduct" });
-Product.belongsToMany(User, { through: "UserProduct" });
+
+Cart.belongsTo(User);
+User.hasOne(Cart);
+
+Cart.belongsToMany(Product, { through: "order" });
+Product.belongsToMany(Cart, { through: "order" }); //*******subject to change*******
 
 module.exports = {
   db,
