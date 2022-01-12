@@ -25,15 +25,18 @@ const Product = db.define("product", {
     },
   },
   price: {
-    type: Sequelize.DECIMAL(10, 2),
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-      notEmpty: true,
+      min: 0
     },
   },
   quantity: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
+    validate: {
+      min: 0
+    }
   },
   category: {
     type: Sequelize.ENUM(
