@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product, Cart, Order },
+  models: { User, Product, Order, OrderProduct },
 } = require("../server/db");
 
 /**
@@ -61,7 +61,7 @@ async function seed() {
   //creating Products
   
   const incompleteOrder = await Promise.all([
-    Order.create(),
+    Order.create({activeOrder: 'Incomplete'}),
     ])
   
   const products = await Promise.all([
@@ -115,8 +115,7 @@ async function seed() {
   //await products[4].addOrder(orders[1])
   
 
-  
-  //console.log(Object.getPrototypeOf(carts[0]));
+  //console.log(Object.getPrototypeOf(OrderProduct));
   //console.log(Object.getPrototypeOf(users[0]));
   //console.log(Object.getPrototypeOf(products[0]));
   //console.log(Object.getPrototypeOf(orders[0]));

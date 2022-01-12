@@ -23,7 +23,8 @@ const OrderProduct = db.define("orderProduct", {
     allowNull: false,
     validate: {
       min: 0
-    }
+    },
+    defaultValue: 0
   }
 });
 
