@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { models: { User, Cart, Order, Product }} = require('../db')
+const { models: { User, Cart, Order, Product, CartProduct, OrderProduct }} = require('../db')
 
 module.exports = router
 
@@ -67,6 +67,86 @@ router.get('/:id/order/:orderId', async (req, res, next) => {
     })
     res.json(singleOrder)
   } catch (err) {
+    next(err)
+  }
+})
+
+//edit cart
+router.put('/:id/cart', async (req, res, next) => {
+  try {
+    const editCart = await Cart.findAll({
+      where: {
+        userId: req.params.id
+      },
+      include: Product
+    })
+    res.json(await editCart.update(req.body))
+  } catch (err) {
+    next(err)
+  }
+})
+
+//WORKING - get single product info from specific user's cart
+router.get('/:id/cart/:productId', async (req, res, next) => {
+  try {
+    const cart = await Cart.findAll({
+      where: {
+        userId: req.params.id
+      }, 
+      include: Product
+    })
+    const editCartItem = await CartProduct.findAll({
+      where: {
+        cartId: cart[0].id,
+        productId: req.params.productId
+      }
+    })
+    res.json(editCartItem)
+  } catch(err) {
+    next(err)
+  }
+})
+
+router.put('/:id/cart/:productId', async (req, res, next) => {
+  try {
+    const cart = await Cart.findAll({
+      where: {
+        userId: req.params.id
+      }, 
+      include: Product
+    })
+    const editCartItem = await CartProduct.findAll({
+      where: {
+        cartId: cart[0].id,
+        productId: req.params.productId
+      }
+    })
+    res.json(await editCartItem.update(req.body))
+  } catch(err) {
+    next(err)
+  }
+})
+
+router.delete('/:id/cart/:productId', async (req, res, next) => {
+  try {
+    const cart = await Cart.findAll({
+      where: {
+        userId: req.params.id
+      }
+    })
+    const product = await Product.findByPk(req.params.productId)
+    res.json(await cart.removeProduct(product))
+  } catch(err) {
+    next(err)
+  }
+})
+
+//edit user
+router.put('/:id', async (req, res, next) => {
+  try {
+    const editUser = await User.findByPk(req.params.id)
+    res.json(await editUser.update(req.body))
+  } catch(err) {
     next(err)
   }
 })

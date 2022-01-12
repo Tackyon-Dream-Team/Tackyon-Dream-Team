@@ -10,12 +10,12 @@ const OrderProduct = db.define("orderProduct", {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  quantity: {
+  orderQuantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: 1,
     validate: {
-        min: 0
+        min: 1
     }
   }
 });

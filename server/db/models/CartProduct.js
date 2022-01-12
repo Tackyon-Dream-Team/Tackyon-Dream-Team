@@ -10,12 +10,12 @@ const CartProduct = db.define("cartProduct", {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  quantity: {
+  cartQuantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: 1,
     validate: {
-        min: 0
+        min: 1
     }
   }
 });

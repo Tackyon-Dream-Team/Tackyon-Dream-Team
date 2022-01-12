@@ -130,12 +130,12 @@ async function seed() {
   //await products[4].addOrder(orders[1])
   
 
-  /*
-  console.log(Object.getPrototypeOf(carts[0]));
-  console.log(Object.getPrototypeOf(users[0]));
-  console.log(Object.getPrototypeOf(products[0]));
-  console.log(Object.getPrototypeOf(orders[0]));
-  */
+  
+  //console.log(Object.getPrototypeOf(carts[0]));
+  //console.log(Object.getPrototypeOf(users[0]));
+  //console.log(Object.getPrototypeOf(products[0]));
+  //console.log(Object.getPrototypeOf(orders[0]));
+  
   
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
