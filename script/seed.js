@@ -101,20 +101,29 @@ async function seed() {
   //user 1 has previous orders 1, 2
   await completedOrders[0].setUser(users[0])
   await incompleteOrder[0].setUser(users[0])
-  //await users[0].addOrder(orders[0])
-  //await users[0].addOrder(orders[1])
   
   //previous order 1 has products 3, 4
-  await incompleteOrder[0].addProduct(products[2]),
-  await incompleteOrder[0].addProduct(products[3]),
-  //await products[2].addOrder(orders[0])
-  //await products[3].addOrder(orders[0])
+  await incompleteOrder[0].addProduct(products[2])
+  await incompleteOrder[0].addProduct(products[3])
   
   //previous order 2 has product 5
   await completedOrders[0].addProduct(products[4])
-  //await products[4].addOrder(orders[1])
+  
+  /*
+  const objectToUpdate = await OrderProduct.findAll({
+    where: {
+      orderId: 1,
+      productId: 5
+    }
+  })
+  objectToUpdate.set({orderId: 1, productId: 5, orderQuantity: 1, orderPrice: 4999})
+  await objectToUpdate.save()
   
 
+  await OrderProduct.create({
+    orderId: 1, productId: 3, orderQuantity: 1, orderPrice: 4999
+  })
+  */
   //console.log(Object.getPrototypeOf(OrderProduct));
   //console.log(Object.getPrototypeOf(users[0]));
   //console.log(Object.getPrototypeOf(products[0]));
