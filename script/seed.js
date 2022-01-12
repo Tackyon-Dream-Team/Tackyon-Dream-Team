@@ -52,81 +52,66 @@ async function seed() {
       admin: true,
     })
   ]);
-
-  const carts = await Promise.all([
-    Cart.create(),
-    Cart.create(),
-    Cart.create(),
-    Cart.create(),
-    Cart.create()])
     
-    
-  const orders = await Promise.all([
-    Order.create(),
-    Order.create(),
-    Order.create(),
-    Order.create(),
-    Order.create(),])  
+  const completedOrders = await Promise.all([
+    Order.create({activeOrder: 'Completed'}),
+    Order.create({activeOrder: 'Completed'}),
+    Order.create({activeOrder: 'Completed'}),
+    Order.create({activeOrder: 'Completed'}),])  
   //creating Products
+  
+  const incompleteOrder = await Promise.all([
+    Order.create(),
+    ])
   
   const products = await Promise.all([
     Product.create({
       name: "Rain Jacket",
       description: "a jacket that gives you the power to stay dry",
-      price: 49.99,
+      price: 4999,
       quantity: 10,
     }),
     Product.create({
       name: "Snow Boots",
       description: "keeps the feet at exactly 70°F at all times",
-      price: 119.99,
+      price: 11999,
     }),
     Product.create({
       name: "Tent",
       description: "hide yourself from ET when out in the wild",
-      price: 599.99,
+      price: 59999,
       quantity: 5,
       category: "Sporting Equipment",
     }),
     Product.create({
       name: "Phone",
       description: "call mama bear with this amazing product",
-      price: 999.99,
+      price: 99999,
       quantity: 1,
       category: "Electronics",
     }),
     Product.create({
       name: "Rain Jacket",
       description: "a jacket that gives you the power to stay dry",
-      price: 49.99,
+      price: 4999,
       quantity: 10,
     }),
   ]);
 
-  //user 1 linked to cart 1
-  await carts[0].setUser(users[0])
-  //await users[0].setCart(carts[0])
-  
-  //cart 1 has products 1, 2
-  await carts[0].addProduct(products[0])
-  await carts[0].addProduct(products[1])
-  //await products[0].addCart(carts[0])
-  //await products[1].addCart(carts[0])
-  
   //user 1 has previous orders 1, 2
-  await orders[0].setUser(users[0])
-  await orders[1].setUser(users[0])
+  await completedOrders[0].setUser(users[0])
+  await incompleteOrder[0].setUser(users[0])
   //await users[0].addOrder(orders[0])
   //await users[0].addOrder(orders[1])
   
   //previous order 1 has products 3, 4
-  await orders[0].addProduct(products[2]),
-  await orders[0].addProduct(products[3]),
+  await incompleteOrder[0].addProduct(products[2]),
+  await incompleteOrder[0].addProduct(products[3]),
   //await products[2].addOrder(orders[0])
   //await products[3].addOrder(orders[0])
   
   //previous order 2 has product 5
-  await orders[1].addProduct(products[4])
+  await completedOrders[0].addProduct(products[4])
   //await products[4].addOrder(orders[1])
   
 
