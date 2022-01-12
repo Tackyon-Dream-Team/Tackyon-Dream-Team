@@ -8,10 +8,6 @@ const Order = db.define("order", {
     primaryKey: true,
     allowNull: false,
   },
-  quantity: {
-      type: Sequelize.INTEGER,
-      defaultValue: 0
-  }
 });
 
 module.exports = Order;

@@ -98,12 +98,40 @@ async function seed() {
     }),
   ]);
 
+  //user 1 linked to cart 1
+  await carts[0].setUser(users[0])
+  await users[0].setCart(carts[0])
   
+  //cart 1 has products 1, 2
+  await carts[0].addProduct(products[0])
+  await carts[0].addProduct(products[1])
+  await products[0].addCart(carts[0])
+  await products[1].addCart(carts[0])
+  
+  //user 1 has previous orders 1, 2
+  await orders[0].setUser(users[0])
+  await orders[1].setUser(users[0])
+  await users[0].addOrder(orders[0])
+  await users[0].addOrder(orders[1])
+  
+  //previous order 1 has products 3, 4
+  await orders[0].addProduct(products[2]),
+  await orders[0].addProduct(products[3]),
+  await products[2].addOrder(orders[0])
+  await products[3].addOrder(orders[0])
+  
+  //previous order 2 has product 5
+  await orders[1].addProduct(products[4])
+  await products[4].addOrder(orders[1])
+  
+
+  /*
   console.log(Object.getPrototypeOf(carts[0]));
   console.log(Object.getPrototypeOf(users[0]));
   console.log(Object.getPrototypeOf(products[0]));
   console.log(Object.getPrototypeOf(orders[0]));
-
+  */
+  
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
