@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product, Cart },
+  models: { User, Product, Cart, Order },
 } = require("../server/db");
 
 /**
@@ -16,21 +16,21 @@ async function seed() {
   // Creating Users
   const users = await Promise.all([
     User.create({
-      username: "cody",
+      username: "Cody",
       password: "123",
       firstName: "cody",
       lastName: "cuffy",
       email: "codycuffy@dreams.com",
     }),
     User.create({
-      username: "murphy",
+      username: "Murphy",
       password: "123",
       firstName: "murphy",
       lastName: "docs",
       email: "murphydocs@dreams.com",
     }),
     User.create({
-      username: "beyonce",
+      username: "Beyonce",
       password: "123",
       firstName: "beyonce",
       lastName: "knowles",
@@ -42,11 +42,33 @@ async function seed() {
       firstName: "2pac",
       lastName: "shakur",
       email: "makaveli@dreams.com",
-      admin: true,
     }),
+    User.create({
+      username: "Mac",
+      password: "123",
+      firstName: "Mac",
+      lastName: "Attack",
+      email: "macaroni@cheese.com",
+      admin: true,
+    })
   ]);
 
+  const carts = await Promise.all([
+    Cart.create(),
+    Cart.create(),
+    Cart.create(),
+    Cart.create(),
+    Cart.create()])
+    
+    
+  const orders = await Promise.all([
+    Order.create(),
+    Order.create(),
+    Order.create(),
+    Order.create(),
+    Order.create(),])  
   //creating Products
+  
   const products = await Promise.all([
     Product.create({
       name: "Rain Jacket",
@@ -81,26 +103,43 @@ async function seed() {
     }),
   ]);
 
-  const cart = await Promise.all([Cart.create({}), Cart.create({})]);
+  //user 1 linked to cart 1
+  await carts[0].setUser(users[0])
+  //await users[0].setCart(carts[0])
+  
+  //cart 1 has products 1, 2
+  await carts[0].addProduct(products[0])
+  await carts[0].addProduct(products[1])
+  //await products[0].addCart(carts[0])
+  //await products[1].addCart(carts[0])
+  
+  //user 1 has previous orders 1, 2
+  await orders[0].setUser(users[0])
+  await orders[1].setUser(users[0])
+  //await users[0].addOrder(orders[0])
+  //await users[0].addOrder(orders[1])
+  
+  //previous order 1 has products 3, 4
+  await orders[0].addProduct(products[2]),
+  await orders[0].addProduct(products[3]),
+  //await products[2].addOrder(orders[0])
+  //await products[3].addOrder(orders[0])
+  
+  //previous order 2 has product 5
+  await orders[1].addProduct(products[4])
+  //await products[4].addOrder(orders[1])
+  
 
-  await cart[0].addProduct(products[0]);
-  await cart[0].addProduct(products[1]);
-  await cart[1].addProduct(products[3]);
-
-  await cart[0].setUser(users[0]);
-  await cart[1].setUser(users[1]);
-
-  console.log(Object.getPrototypeOf(cart[0]));
-
+  /*
+  console.log(Object.getPrototypeOf(carts[0]));
+  console.log(Object.getPrototypeOf(users[0]));
+  console.log(Object.getPrototypeOf(products[0]));
+  console.log(Object.getPrototypeOf(orders[0]));
+  */
+  
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
-  // return {
-  //   users: {
-  //     cody: users[0],
-  //     murphy: users[1],
-  //   },
-  // };
 }
 
 /*
