@@ -31,24 +31,27 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/:id/cart', async (req, res, next) => {
   try {
-    const cart = await Cart.findAll({
+    const order = await Order.findAll({
       where: {
-        userId: req.params.id
+        userId: req.params.id,
+        activeOrder: 'Incomplete'
       },
       include: Product
     })
-    res.json(cart)
+    res.json(order)
   } catch (err) {
     next(err)
   }
 })
 
-router.get('/:id/order', async (req, res, next) => {
+router.get('/:id/orders', async (req, res, next) => {
   try {
     const order = await Order.findAll({
       where: {
-        userId: req.params.id
-      }
+        userId: req.params.id,
+        activeOrder: 'Completed'
+      },
+      include: Product
     })
     res.json(order)
   } catch(err) {
@@ -56,7 +59,7 @@ router.get('/:id/order', async (req, res, next) => {
   }
 })
 
-router.get('/:id/order/:orderId', async (req, res, next) => {
+router.get('/:id/orders/:orderId', async (req, res, next) => {
   try {
     const singleOrder = await Order.findAll({
       where: {
@@ -71,47 +74,29 @@ router.get('/:id/order/:orderId', async (req, res, next) => {
   }
 })
 
-//edit cart
+//edit cart - when we say we're editing a cart, we're really only changing the order status
 router.put('/:id/cart', async (req, res, next) => {
   try {
-    const editCart = await Cart.findAll({
+    const editOrder = await Order.findAll({
       where: {
-        userId: req.params.id
-      },
-      include: Product
+        userId: req.params.id,
+        activeOrder: 'Incomplete'
+      }
     })
-    res.json(await editCart.update(req.body))
+    res.json(await editOrder.update(req.body))
   } catch (err) {
     next(err)
   }
 })
 
-//WORKING - get single product info from specific user's cart
-router.get('/:id/cart/:productId', async (req, res, next) => {
-  try {
-    const cart = await Cart.findAll({
-      where: {
-        userId: req.params.id
-      }, 
-      include: Product
-    })
-    const editCartItem = await CartProduct.findAll({
-      where: {
-        cartId: cart[0].id,
-        productId: req.params.productId
-      }
-    })
-    res.json(editCartItem)
-  } catch(err) {
-    next(err)
-  }
-})
+///////////////////////////////////////////////////////////////////////
 
 router.put('/:id/cart/:productId', async (req, res, next) => {
   try {
-    const cart = await Cart.findAll({
+    const cart = await Order.findAll({
       where: {
-        userId: req.params.id
+        userId: req.params.id,
+        activeOrder: 'Incomplete'
       }, 
       include: Product
     })
