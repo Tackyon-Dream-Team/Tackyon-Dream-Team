@@ -35,14 +35,7 @@ router.get('/:id/cart', async (req, res, next) => {
       where: {
         userId: req.params.id
       },
-      include: Order,
-      where: {
-        cartId: id
-      },
-      // include: Product,
-      // where: {
-
-      // }
+      include: Product
     })
     res.json(cart)
   } catch (err) {
@@ -50,3 +43,30 @@ router.get('/:id/cart', async (req, res, next) => {
   }
 })
 
+router.get('/:id/order', async (req, res, next) => {
+  try {
+    const order = await Order.findAll({
+      where: {
+        userId: req.params.id
+      }
+    })
+    res.json(order)
+  } catch(err) {
+    next(err)
+  }
+})
+
+router.get('/:id/order/:orderId', async (req, res, next) => {
+  try {
+    const singleOrder = await Order.findAll({
+      where: {
+        userId: req.params.id,
+        id: req.params.orderId
+      },
+      include: Product
+    })
+    res.json(singleOrder)
+  } catch (err) {
+    next(err)
+  }
+})
