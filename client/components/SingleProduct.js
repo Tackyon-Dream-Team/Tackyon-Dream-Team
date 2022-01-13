@@ -10,7 +10,6 @@ class SingleProduct extends React.Component {
     componentDidMount() {
         try {
             this.props.loadSingleProduct(this.props.match.params.id); //match it to routes
-            console.log('Inside Component did mount: ', this.props)
         } catch(err){
             console.log('error in componentDidMount of SingleProduct component: ', err)
         }

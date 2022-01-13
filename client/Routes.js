@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import { getProducts } from './store/Products';
 import Home from './components/Home';
 import SingleProduct from './components/SingleProduct'
+import AllOrders from './components/AllOrders'
 import {me} from './store'
 
 /**
@@ -23,6 +24,7 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
+            <Route path='/users/:id/orders' component={AllOrders} />
             <Route path='/products/:id' component={SingleProduct} />
             <Route path="/home" component={Home} />
             <Redirect to="/home" />

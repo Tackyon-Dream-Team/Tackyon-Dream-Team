@@ -4,7 +4,11 @@ import { fetchOrders } from '../store/orders'
 
 class AllOrders extends React.Component {
     componentDidMount() {
-        this.props.fetchOrders()
+        try {
+            this.props.fetchOrders(this.props.match.params.id) //userId
+        } catch(err) {
+            console.log('error in componentDidMount of AllOrders component: ', err)
+        }
     }
     
     render() {
@@ -41,7 +45,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        fetchOrders: () => dispatch(fetchOrders())
+        fetchOrders: (userId) => dispatch(fetchOrders(userId))
     }
 }
 
