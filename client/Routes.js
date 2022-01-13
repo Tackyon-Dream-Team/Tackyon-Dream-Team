@@ -14,7 +14,7 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    this.props.loadProducts()
+    //this.props.loadProducts()
   }
 
   render() {
@@ -57,7 +57,7 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
     },
-    loadProducts: () => dispatch(getProducts())
+    //loadProducts: () => dispatch(getProducts())
   }
 }
 

@@ -3,6 +3,7 @@ import axios from 'axios'
 const SET_ORDERS = 'GET_ORDERS'
 
 const setOrders = (orders) => {
+    console.log('==========ORDERS=======', orders)
     return {
         type: SET_ORDERS,
         orders
@@ -12,6 +13,7 @@ const setOrders = (orders) => {
 export const fetchOrders = (id) => {
     return async (dispatch) => {
         const {data} = await axios.get(`/api/users/${id}/orders`)
+        console.log('===============THUNK===========', data)
         dispatch(setOrders(data))
     }
 }
