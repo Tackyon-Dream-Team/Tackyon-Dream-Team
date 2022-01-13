@@ -26,7 +26,7 @@ class SingleProduct extends React.Component {
             <p>{product.description}</p>
             <img src={product.imageUrl} className = 'SinglePicture'/>
             <form id='Add-Cart-Form'>
-            <button>Add to Cart </button>
+            <button className='AddToCartButton' onClick={() => this.props.history.push(`/CartOrContinueShopping`)}>Add to Cart </button>
             </form>
         </div>
         )
