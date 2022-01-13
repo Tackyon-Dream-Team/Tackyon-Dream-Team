@@ -10,7 +10,9 @@ const AllProducts = (props) => {
         <div key={product.id} className="product" align="center">
           <h3>{product.name}</h3>
           <img src={product.imageUrl} />
-          <p>{"$" + product.price * 0.01}</p>
+          <p>
+            ${Math.floor(product.price / 100)}.{product.price % 100}
+          </p>
           <p>{product.description}</p>
           <button>Add To Cart</button>
           <br />
