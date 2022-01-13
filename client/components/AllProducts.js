@@ -49,9 +49,9 @@ const mapState = (state) => {
     }
 };
 
-const mapDispatch = (dispatch) => {
-    loadproducts: () => dispatch(getProducts())
-}
+// const mapDispatch = (dispatch) => {
+//     loadproducts: () => dispatch(getProducts())
+// }
  
 
-export default connect(mapState, mapDispatch)(AllProducts)
+export default connect(mapState)(AllProducts)

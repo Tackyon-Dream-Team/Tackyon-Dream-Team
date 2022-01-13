@@ -22,7 +22,7 @@ export const getProducts = () => {
 
 const intialState = [];
 
-export default (state = intialState, action) => {
+export default function ProductsReducer(state = intialState, action) {
     switch(action.type) {
         case SET_PRODUCTS:
             return action.products;
