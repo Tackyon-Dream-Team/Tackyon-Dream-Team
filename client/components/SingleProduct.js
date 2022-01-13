@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
+import { fetchSingleProduct } from '../store/singleProduct'
 
 class SingleProduct extends React.Component {
     constructor(props) {
@@ -9,14 +9,16 @@ class SingleProduct extends React.Component {
     
     componentDidMount() {
         try {
-            this.props.loadSingleProduct(this.props.match.params.productId);//match it to routes
+            this.props.loadSingleProduct(this.props.match.params.id); //match it to routes
+            console.log('Inside Component did mount: ', this.props)
         } catch(err){
-            console.log('error in componentDidMount of SingleProduct ocmponent: ', err)
+            console.log('error in componentDidMount of SingleProduct component: ', err)
         }
     }
     
     render() {
-        const product = this.props.product
+        const product = this.props.product || {name: '', price: 11999, quantity: 100, description: '', imageUrl:''}
+        console.log('Product: ', product)
         return (
         <div id='single-Product'>
             <h1>{product.name}</h1>
