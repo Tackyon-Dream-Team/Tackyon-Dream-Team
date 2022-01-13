@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
+import { getProducts } from './store/Products';
 import Home from './components/Home';
 import {me} from './store'
 
@@ -11,6 +12,7 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    this.props.loadProducts()
   }
 
   render() {
@@ -50,7 +52,8 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-    }
+    },
+    loadProducts: () => dispatch(getProducts())
   }
 }
 
