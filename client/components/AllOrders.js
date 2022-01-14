@@ -25,9 +25,20 @@ class AllOrders extends React.Component {
             (
                 <div>
                     {orders.map((order) => {
+                        console.log('=========================', order.products)
                         return (
                             <div key={order.id}>
                                 <h1>Order Placed: {order.updatedAt}</h1>
+                                {order.products.map((item) => {
+                                    return (
+                                        <div>
+                                            <h3>{item.name}</h3>
+                                            <h3>{item.orderProduct.orderQuantity}</h3>
+                                            <h3>{item.orderProduct.orderPrice}</h3>
+                                            <img src={item.imageUrl} className = 'SinglePicture'/>
+                                        </div>
+                                    )
+                                })}
                                 <button onClick={() => this.props.history.push(`/orders/${order.id}`)}>View Details</button>
                             </div>
                         )
