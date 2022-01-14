@@ -21,7 +21,7 @@ export const getSingleOrder = (id, orderId) => {
   };
 };
 
-export default function singleOrderReducer(state = {}, action) {
+export default function singleOrderReducer(state = [], action) {
   switch (action.type) {
     case SET_SINGLE_ORDER:
       return action.order;

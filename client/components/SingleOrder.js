@@ -22,25 +22,30 @@ class SingleOrder extends React.Component {
 
   render() {
     const order = this.props.order;
-    console.log("Order: ", order);
-    return (
-      <div id="single-Order">
-        {order.map((product) => {
-          return (
-            <div key={product.id}>
-              <h1>{order.name}</h1>
-              <h3>
-                ${Math.floor(order.price / 100)}.{order.price % 100}
-              </h3>
-              <h3>{order.quantity}</h3>
-              <h3>About this Item:</h3>
-              <p>{order.description}</p>
-              <img src={order.imageUrl} className="SinglePicture" />
-            </div>
-          );
-        })}
-      </div>
-    );
+    if (order.length === 0) {
+      return <div>Loading...</div>;
+    } else {
+      const products = order[0].products;
+      console.log("!!!!!!!!", products);
+      return (
+        <div id="single-Order">
+          {products.map((product) => {
+            return (
+              <div key={product.id}>
+                <h1>{product.name}</h1>
+                <h3>
+                  ${Math.floor(product.price / 100)}.{product.price % 100}
+                </h3>
+                <h3>{product.quantity}</h3>
+                <h3>About this Item:</h3>
+                <p>{product.description}</p>
+                <img src={product.imageUrl} className="SinglePicture" />
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
   }
 }
 
