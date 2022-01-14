@@ -100,6 +100,7 @@ async function seed() {
 
   //user 1 has previous orders 1, 2
   await completedOrders[0].setUser(users[0])
+  await completedOrders[1].setUser(users[0])
   await incompleteOrder[0].setUser(users[0])
   
   //previous order 1 has products 3, 4
@@ -108,6 +109,8 @@ async function seed() {
   
   //previous order 2 has product 5
   await completedOrders[0].addProduct(products[4])
+  await completedOrders[1].addProduct(products[2])
+  await completedOrders[1].addProduct(products[1])
   
   /*
   const objectToUpdate = await OrderProduct.findAll({

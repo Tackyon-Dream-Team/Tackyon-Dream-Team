@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const AllProducts = (props) => {
+const AllProducts = (props = {id: 1, name: '', imageUrl: '', price: '', description: ''}) => {
   const allProducts = props.products;
   console.log("allproducts-----", props);
   return (
