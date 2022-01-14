@@ -31,7 +31,7 @@ class AllOrders extends React.Component {
                                 <h1>Order Placed: {order.updatedAt}</h1>
                                 {order.products.map((item) => {
                                     return (
-                                        <div>
+                                        <div key={item.id}>
                                             <h3>{item.name}</h3>
                                             <h3>{item.orderProduct.orderQuantity}</h3>
                                             <h3>{item.orderProduct.orderPrice}</h3>
