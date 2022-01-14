@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import { getProducts } from "./store/Products";
+import { me } from "./store";
 import Home from "./components/Home";
 import SingleProduct from "./components/SingleProduct";
-import { me } from "./store";
 import SingleOrder from "./components/SingleOrder";
 import AllOrders from "./components/AllOrders";
+import CheckoutOrder from "./components/CheckoutOrder"
+//import { CheckoutOrder, AllOrders, SingleOrder, SingleProduct, Home} from "./components"
 
 /**
  * COMPONENT
@@ -25,6 +27,7 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
+            <Route path="/users/:id/orders/:orderId/checkout" component={CheckoutOrder} />
             <Route path="/users/:id/orders/:orderId" component={SingleOrder} />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/users/:id/orders" component={AllOrders} />
