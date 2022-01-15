@@ -61,7 +61,7 @@ class Cart extends React.Component {
           <div id="total">
             Subtotal ({products.length} item(s)): $
               {
-                products.map(product => product.price)
+                products.map(product => product.price * product.quantity)
                 .reduce((acum, currVal) => acum + currVal)/100
                 
               }
