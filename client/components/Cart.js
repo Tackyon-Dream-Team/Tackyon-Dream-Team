@@ -57,14 +57,18 @@ class Cart extends React.Component {
             );
           })}
         </div>
-        <div id="Subtotal">
-          Subtotal ({products.length} item(s)): $
-            {
+        <div id="Order-summary">
+          <div id="total">
+            Subtotal ({products.length} item(s)): $
+              {
                 products.map(product => product.price)
                 .reduce((acum, currVal) => acum + currVal)/100
                 
-            }
+              }
+            </div>
         </div>
+        <button>Proceed to checkout</button>
+
       </>  
     
       );
