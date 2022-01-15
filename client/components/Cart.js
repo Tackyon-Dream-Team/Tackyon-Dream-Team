@@ -27,12 +27,17 @@ class Cart extends React.Component {
     const cart = this.props.cart || [];
     console.log('render cart ' , cart)
     if (cart.length === 0) {
-      return <div>Cart is Empty</div>;
+      return (
+      <div>
+        <h1>Your Shopping Cart is Empty</h1>
+        <em>If you cannot place an item in your cart, your browser might not support cookies. Learn more</em>
+      </div>)
     } else {
       const products = cart[0].products;
       console.log("!!!!cartItems!!!!", products);
       return (
       <>  
+        <h1>Your Shopping Cart</h1>
         <div id="cartItems">
           {products.map((product) => {
             return (
@@ -41,16 +46,19 @@ class Cart extends React.Component {
                 <h3>
                   ${Math.floor(product.price / 100)}.{product.price % 100}
                 </h3>
-                <h3>{product.quantity}</h3>
-                <h3>About this Item:</h3>
-                <p>{product.description}</p>
+                <div className="edit-cart">
+                  <button className="incr-bttn">-</button>
+                  <span>{product.quantity}</span>
+                  <button classname="decr-bttn">+</button>
+                  <button classname="remove-bttn">remove</button>
+                </div>
                 <img src={product.imageUrl} className="SinglePicture" />
               </div>
             );
           })}
         </div>
-        <div id="total-Price">
-            $
+        <div id="Subtotal">
+          Subtotal ({products.length} item(s)): $
             {
                 products.map(product => product.price)
                 .reduce((acum, currVal) => acum + currVal)/100
