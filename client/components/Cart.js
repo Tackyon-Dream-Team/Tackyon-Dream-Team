@@ -32,7 +32,8 @@ class Cart extends React.Component {
       const products = cart[0].products;
       console.log("!!!!cartItems!!!!", products);
       return (
-        <div id="single-Order">
+      <>  
+        <div id="cartItems">
           {products.map((product) => {
             return (
               <div key={product.id}>
@@ -48,6 +49,16 @@ class Cart extends React.Component {
             );
           })}
         </div>
+        <div id="total-Price">
+            $
+            {
+                products.map(product => product.price)
+                .reduce((acum, currVal) => acum + currVal)/100
+                
+            }
+        </div>
+      </>  
+    
       );
     }
   }
