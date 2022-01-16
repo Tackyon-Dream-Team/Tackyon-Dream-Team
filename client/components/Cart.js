@@ -34,7 +34,7 @@ class Cart extends React.Component {
       </div>)
     } else {
       const products = cart[0].products;
-      console.log("!!!!cartItems!!!!", products);
+      // console.log("!!!!cartItems!!!!", products);
       return (
       <>  
         <h1>Your Shopping Cart</h1>
@@ -47,10 +47,12 @@ class Cart extends React.Component {
                   ${Math.floor(product.price / 100)}.{product.price % 100}
                 </h3>
                 <div className="edit-cart">
-                  <button className="incr-bttn">-</button>
+                  <button name="incr-bttn">-</button>
                   <span>{product.quantity}</span>
-                  <button classname="decr-bttn">+</button>
-                  <button classname="remove-bttn">remove</button>
+                  <button name="decr-bttn">+</button>
+                  <form>
+                    <button className="remove-bttn" onClick={() => this.props.deleteProduct(product.id)}>remove</button>
+                  </form>
                 </div>
                 <img src={product.imageUrl} className="SinglePicture" />
               </div>

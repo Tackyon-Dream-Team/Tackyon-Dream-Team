@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const SET_CART = "SET_CART";
+const REMOVE_CART_ITEM = "REMOVE_CART_ITEM"
 
 export const setCart = (cart) => {
   return {
@@ -8,6 +9,13 @@ export const setCart = (cart) => {
     cart,
   };
 };
+
+const _removeCartItem = (cartItem) => {
+  return {
+    type: REMOVE_CART_ITEM,
+    cartItem
+  }
+}
 
 export const getCart = (id) => {
   return async (dispatch) => {
@@ -20,6 +28,18 @@ export const getCart = (id) => {
     }
   };
 };
+
+export const removeCartItem = (id, productId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`/api/users/${id}/cart/${productId}`);
+      console.log("inside removeCartItem thunk: ", data);
+      dispatch(_removeCartItem(data));
+    } catch (error) {
+      console.log("error in removeCartItem thunk", error);
+    }
+  };
+}
 
 export default function CartReducer(state = [], action) {
   switch (action.type) {
