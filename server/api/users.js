@@ -114,13 +114,14 @@ router.put('/:id/cart/:productId', async (req, res, next) => {
 
 router.delete('/:id/cart/:productId', async (req, res, next) => {
   try {
-    const cart = await Cart.findAll({
+    const cart = await Order.findAll({
       where: {
         userId: req.params.id
       }
     })
     const product = await Product.findByPk(req.params.productId)
-    res.json(await product.removeCart(cart))
+    await product.removeOrderProduct(cart)
+    res.send(200).send('ok')
   } catch(err) {
     next(err)
   }

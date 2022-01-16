@@ -50,8 +50,8 @@ class Cart extends React.Component {
                   <button name="incr-bttn">-</button>
                   <span>{product.quantity}</span>
                   <button name="decr-bttn">+</button>
-                  <form>
-                    <button className="remove-bttn" onClick={() => this.props.removeProduct(userId, product.id)}>remove</button>
+                  <form onSubmit={(ev) => ev.preventDefault()}>
+                    <button className="remove-bttn" onClick={() => this.props.removeCartProduct(userId, product.id)}>remove</button>
                   </form>
                 </div>
                 <img src={product.imageUrl} className="SinglePicture" />
@@ -89,7 +89,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadCart: (id) => dispatch(getCart(id)),
-    removeProduct: (id, productId) => dispatch(removeCartProduct(id, productId))
+    removeCartProduct: (id, productId) => dispatch(removeCartProduct(id, productId))
   };
 };
 
