@@ -120,8 +120,9 @@ router.delete('/:id/cart/:productId', async (req, res, next) => {
       }
     })
     const product = await Product.findByPk(req.params.productId)
-    await product.removeOrderProduct(cart)
-    res.send(200).send('ok')
+    console.log('delete route in api', product)
+    await cart.removeProduct(product)
+    res.json(product)
   } catch(err) {
     next(err)
   }
