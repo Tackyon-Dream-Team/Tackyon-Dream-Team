@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getSingleOrder } from "../store/singleOrder";
-import { getCart } from "../store/cart";
+import { getCart, removeCartProduct } from "../store/cart";
 
 
 class Cart extends React.Component {
@@ -34,6 +33,7 @@ class Cart extends React.Component {
       </div>)
     } else {
       const products = cart[0].products;
+      const userId = cart[0].userId
       // console.log("!!!!cartItems!!!!", products);
       return (
       <>  
@@ -51,7 +51,7 @@ class Cart extends React.Component {
                   <span>{product.quantity}</span>
                   <button name="decr-bttn">+</button>
                   <form>
-                    <button className="remove-bttn" onClick={() => this.props.deleteProduct(product.id)}>remove</button>
+                    <button className="remove-bttn" onClick={() => this.props.removeProduct(userId, product.id)}>remove</button>
                   </form>
                 </div>
                 <img src={product.imageUrl} className="SinglePicture" />
@@ -89,6 +89,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadCart: (id) => dispatch(getCart(id)),
+    removeProduct: (id, productId) => dispatch(removeCartProduct(id, productId))
   };
 };
 

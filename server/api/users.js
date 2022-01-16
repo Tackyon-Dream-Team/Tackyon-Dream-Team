@@ -120,7 +120,7 @@ router.delete('/:id/cart/:productId', async (req, res, next) => {
       }
     })
     const product = await Product.findByPk(req.params.productId)
-    res.json(product.removeCart(cart))
+    res.json(await product.removeCart(cart))
   } catch(err) {
     next(err)
   }
