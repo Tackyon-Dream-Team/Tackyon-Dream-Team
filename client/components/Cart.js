@@ -61,7 +61,8 @@ class Cart extends React.Component {
         </div>
         <div id="Order-summary">
           <div id="total">
-            Subtotal ({products.length} item(s)): $
+            Subtotal ({ products.map(product => product.quantity)
+                .reduce((acum, currVal) => acum + currVal)} item(s)): $
               {
                 products.map(product => product.price * product.quantity)
                 .reduce((acum, currVal) => acum + currVal)/100
