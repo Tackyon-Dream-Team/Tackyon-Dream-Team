@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import history from '../history'
 
 class Navbar extends React.Component {
   constructor() {
@@ -27,6 +26,8 @@ class Navbar extends React.Component {
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          {//<button onClick={() => FINISH THIS VIEW CART BUTTON FOR GUEST USER
+          }
         </div>
       )}
       </div>
