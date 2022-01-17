@@ -2,18 +2,25 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import history from '../history'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>FS-App-Template</h1>
-    <nav>
-      {isLoggedIn ? (
+class Navbar extends React.Component {
+  constructor() {
+    super()
+  }
+  render() {
+    const { isLoggedIn, handleClick } = this.props
+    const { user } = this.props || {name: '', id: 0}
+    return (
+      <div>
+        {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
+          <h1>Welcome, {user.firstName}</h1>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
+          <button onClick={() => this.props.history.push(`/users/${user.id}/cart`)}>View Cart</button>
         </div>
       ) : (
         <div>
@@ -22,16 +29,17 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
-    </nav>
-    <hr />
-  </div>
-)
-
+      </div>
+    )
+  }
+}
 /**
  * CONTAINER
  */
 const mapState = state => {
+  console.log('-----state.auth.id-----', state.auth)
   return {
+    user: state.auth,
     isLoggedIn: !!state.auth.id
   }
 }

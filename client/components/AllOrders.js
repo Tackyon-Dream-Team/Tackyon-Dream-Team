@@ -13,7 +13,6 @@ class AllOrders extends React.Component {
     
     render() {
         const orders = this.props.orders || []
-        console.log('++++++++++++++++++++++', this.props)
         return <div>
             <h1>Order History</h1>
             {orders.length === 0 ? 
@@ -25,7 +24,6 @@ class AllOrders extends React.Component {
             (
                 <div>
                     {orders.map((order) => {
-                        console.log('=========================', order.products)
                         return (
                             <div key={order.id}>
                                 <h1>Order Placed: {order.updatedAt}</h1>
@@ -50,7 +48,6 @@ class AllOrders extends React.Component {
 }
 
 const mapState = (state) => {
-    console.log('====STATE====', state)
     return {
         orders: state.Orders
     }

@@ -10,9 +10,7 @@ class AllProducts extends React.Component {
   
   componentDidMount() {
     try {
-      console.log('Trying to get products')
       this.props.getProducts()
-      console.log('Got products')
     } catch(err) {
       console.log('error in componentDidMount of AllProducts component: ', err)
     }
@@ -21,12 +19,11 @@ class AllProducts extends React.Component {
   render() {
     
     const products = this.props.products || []
-    console.log('=================products==========', products)
     return (
     <div>
       {products.map((product) => {
         return (
-        <Link to={`/products/${product.id}`} key={product.id} class='product'>
+        <Link to={`/products/${product.id}`} key={product.id} className='product'>
           <h1>{product.name}</h1>
           <h3>${Math.floor(product.price/100)}.{product.price%100}</h3>
           <img src={product.imageUrl} className = 'SinglePicture'/>
