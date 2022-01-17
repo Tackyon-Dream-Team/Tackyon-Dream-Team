@@ -1,26 +1,41 @@
 import React from "react";
 import { connect } from "react-redux";
+import { getProducts } from '../store/Products'
 
-const AllProducts = (props = {id: 1, name: '', imageUrl: '', price: '', description: ''}) => {
-  const allProducts = props.products;
-  console.log("allproducts-----", props);
-  return (
+class AllProducts extends React.Component {
+  constructor() {
+    super()
+  }
+  
+  componentDidMount() {
+    try {
+      console.log('Trying to get products')
+      this.props.getProducts()
+      console.log('Got products')
+    } catch(err) {
+      console.log('error in componentDidMount of AllProducts component: ', err)
+    }
+  }
+  
+  render() {
+    
+    const products = this.props.products || []
+    console.log('=================products==========', products)
+    return (
     <div>
-      {allProducts.map((product) => (
-        <div key={product.id} className="product" align="center">
-          <h3>{product.name}</h3>
-          <img src={product.imageUrl} />
-          <p>
-            ${Math.floor(product.price / 100)}.{product.price % 100}
-          </p>
-          <p>{product.description}</p>
-          <button>Add To Cart</button>
-          <br />
+      {products.map((product) => {
+        return (
+        <div key={product.id} className='product'>
+          <h1>{product.name}</h1>
+          <h3>${Math.floor(product.price/100)}.{product.price%100}</h3>
+          <img src={product.imageUrl} className = 'SinglePicture'/>
         </div>
-      ))}
+        )
+      })}
     </div>
-  );
-};
+    )
+  }
+}
 
 const mapState = (state) => {
   return {
@@ -28,4 +43,9 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(AllProducts);
+const mapDispatch = (dispatch) => {
+  return {
+    getProducts: () => dispatch(getProducts())
+  }
+}
+export default connect(mapState, mapDispatch)(AllProducts);

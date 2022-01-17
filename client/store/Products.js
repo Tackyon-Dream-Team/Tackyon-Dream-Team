@@ -10,8 +10,9 @@ const setProducts = (products) => ({
 export const getProducts = () => {
   return async (dispatch) => {
     try {
+      console.log('========getProducts called==========')
       const { data } = await axios.get("/api/products");
-      // console.log("get product thunk", data);
+      console.log("get product thunk", data);
       dispatch(setProducts(data));
     } catch (error) {
       console.log("get product thunk something wrong", error);
