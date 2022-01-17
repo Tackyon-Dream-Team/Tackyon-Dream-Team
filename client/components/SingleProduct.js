@@ -22,7 +22,7 @@ class SingleProduct extends React.Component {
         <div id='single-Product'>
             <h1>{product.name}</h1>
             <h3>${Math.floor(product.price/100)}.{product.price%100}</h3>
-            <h3>{product.quantity} Left in Stock</h3>
+            {product.quantity > 0 ? <h3>{product.quantity} Left in Stock</h3> : <h3>Out of Stock</h3>}
             <h3>About this Item:</h3>
             <p>{product.description}</p>
             <img src={product.imageUrl} className = 'SinglePicture'/>
