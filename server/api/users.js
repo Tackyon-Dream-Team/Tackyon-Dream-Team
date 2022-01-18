@@ -89,7 +89,30 @@ router.put('/:id/cart', async (req, res, next) => {
   }
 })
 
+router.post('/:id/cart', async (req, res, next) => {
+  try {
+    res.json(await OrderProduct.create(req.body))
+  } catch(err) {
+    next(err)
+  }
+})
 ///////////////////////////////////////////////////////////////////////
+
+//Changing activeOrder field from 'Incomplete' to 'Completed'
+router.put('/:id/cart', async (req, res, next) => {
+  try {
+    const checkoutOrder = await Order.findAll({
+      where: {
+        userId:req.params.id,
+        activeOrder: 'Incomplete'
+      }
+    })
+    res.json(await checkoutOrder.update({activeOrder: 'Completed'}))
+  } catch(err) {
+    next(err)
+  }
+})
+
 
 router.put('/:id/cart/:productId', async (req, res, next) => {
   try {

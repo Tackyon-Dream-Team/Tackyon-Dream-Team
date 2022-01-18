@@ -2,13 +2,15 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
-import { getProducts } from "./store/Products";
+import { me } from "./store";
+
 import Home from "./components/Home";
 import SingleProduct from "./components/SingleProduct";
-import { me } from "./store";
 import SingleOrder from "./components/SingleOrder";
 import AllOrders from "./components/AllOrders";
-import Cart from "./components/Cart";
+import AllProducts from "./components/AllProducts";
+import CheckoutOrder from "./components/CheckoutOrder"
+import Cart from './components/Cart'
 
 /**
  * COMPONENT
@@ -16,17 +18,17 @@ import Cart from "./components/Cart";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
-    this.props.loadProducts();
   }
 
   render() {
     const { isLoggedIn } = this.props;
-
     return (
+      /*
       <div>
         {isLoggedIn ? (
           <Switch>
             <Route path="/users/:id/cart/" component={Cart} />
+            <Route path="/users/:id/orders/:orderId/checkout" component={CheckoutOrder} />
             <Route path="/users/:id/orders/:orderId" component={SingleOrder} />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/users/:id/orders" component={AllOrders} />
@@ -35,11 +37,29 @@ class Routes extends Component {
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
+            <Route path="/" exact component={AllProducts} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
           </Switch>
         )}
+      </div>
+      */
+      
+      <div>
+        {isLoggedIn ? (
+          <Route path='/home' component={Home} />
+        ) : (<div></div>)}
+   
+        <Switch>
+          <Route exact path='/' component= {AllProducts} />
+          <Route path='/products/:id' component= {SingleProduct} />
+          <Route path='/users/:id/orders/:orderId' component={SingleOrder} />
+          <Route path='/users/:id/orders' component={AllOrders} />
+          <Route exact path='/users/:id/cart' component={Cart} />
+          <Route path='/users/:id/cart/checkout' component={CheckoutOrder} />
+          <Route path='/login' component={Login} />
+          <Route path='/signup' component={Signup} />
+        </Switch>
       </div>
     );
   }
@@ -61,7 +81,6 @@ const mapDispatch = (dispatch) => {
     loadInitialData() {
       dispatch(me());
     },
-    loadProducts: () => dispatch(getProducts()),
   };
 };
 
