@@ -7,11 +7,13 @@ const TOKEN = "token";
  * ACTION TYPES
  */
 const SET_AUTH = "SET_AUTH";
+const SET_NEW_USER = "SET_NEW_USER";
 
 /**
  * ACTION CREATORS
  */
 const setAuth = (auth) => ({ type: SET_AUTH, auth });
+const setNewUser = (auth) => ({ type: SET_NEW_USER, auth });
 
 /**
  * THUNK CREATORS
@@ -40,6 +42,24 @@ export const authenticate =
     }
   };
 
+export const signUp =
+  (username, password, firstName, lastName, email, method) =>
+  async (dispatch) => {
+    try {
+      const res = await axios.post(`/auth/${method}`, {
+        username,
+        password,
+        firstName,
+        lastName,
+        email,
+      });
+      window.localStorage.setItem(TOKEN, res.data.token);
+      dispatch(me());
+    } catch (authError) {
+      return dispatch(setAuth({ error: authError }));
+    }
+  };
+
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   history.push("/");
@@ -55,6 +75,8 @@ export const logout = () => {
 export default function (state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
+      return action.auth;
+    case SET_NEW_USER:
       return action.auth;
     default:
       return state;
