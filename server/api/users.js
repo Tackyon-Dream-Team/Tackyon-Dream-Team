@@ -89,6 +89,13 @@ router.put('/:id/cart', async (req, res, next) => {
   }
 })
 
+router.post('/:id/cart', async (req, res, next) => {
+  try {
+    res.json(await OrderProduct.create(req.body))
+  } catch(err) {
+    next(err)
+  }
+})
 ///////////////////////////////////////////////////////////////////////
 
 //Changing activeOrder field from 'Incomplete' to 'Completed'
