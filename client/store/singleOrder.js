@@ -13,7 +13,7 @@ export const getSingleOrder = (id, orderId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/users/${id}/orders/${orderId}`);
-      console.log("indside singleOrder thunk: ", data);
+      console.log("inside singleOrder thunk: ", data);
       dispatch(setSingleOrder(data));
     } catch (error) {
       console.log("error in singleOrder", error);

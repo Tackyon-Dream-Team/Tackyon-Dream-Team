@@ -91,10 +91,10 @@ async function seed() {
       category: "Electronics",
     }),
     Product.create({
-      name: "Rain Jacket",
-      description: "a jacket that gives you the power to stay dry",
-      price: 4999,
-      quantity: 10,
+      name: "Sun Hoodie",
+      description: "a hoodie that keeps you pale",
+      price: 1529,
+      quantity: 20,
     }),
   ]);
 

@@ -1,26 +1,39 @@
 import React from "react";
 import { connect } from "react-redux";
+import { getProducts } from '../store/Products'
+import { Link } from 'react-router-dom'
 
-const AllProducts = (props = {id: 1, name: '', imageUrl: '', price: '', description: ''}) => {
-  const allProducts = props.products;
-  console.log("allproducts-----", props);
-  return (
+class AllProducts extends React.Component {
+  constructor() {
+    super()
+  }
+  
+  componentDidMount() {
+    try {
+      this.props.getProducts()
+    } catch(err) {
+      console.log('error in componentDidMount of AllProducts component: ', err)
+    }
+  }
+  
+  render() {
+    
+    const products = this.props.products || []
+    return (
     <div>
-      {allProducts.map((product) => (
-        <div key={product.id} className="product" align="center">
-          <h3>{product.name}</h3>
-          <img src={product.imageUrl} />
-          <p>
-            ${Math.floor(product.price / 100)}.{product.price % 100}
-          </p>
-          <p>{product.description}</p>
-          <button>Add To Cart</button>
-          <br />
-        </div>
-      ))}
+      {products.map((product) => {
+        return (
+        <Link to={`/products/${product.id}`} key={product.id} className='product'>
+          <h1>{product.name}</h1>
+          <h3>${Math.floor(product.price/100)}.{product.price%100}</h3>
+          <img src={product.imageUrl} className = 'SinglePicture'/>
+        </Link>
+        )
+      })}
     </div>
-  );
-};
+    )
+  }
+}
 
 const mapState = (state) => {
   return {
@@ -28,4 +41,9 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(AllProducts);
+const mapDispatch = (dispatch) => {
+  return {
+    getProducts: () => dispatch(getProducts())
+  }
+}
+export default connect(mapState, mapDispatch)(AllProducts);
