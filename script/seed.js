@@ -127,10 +127,10 @@ async function seed() {
     orderId: 1, productId: 3, orderQuantity: 1, orderPrice: 4999
   })
   */
-  //console.log(Object.getPrototypeOf(OrderProduct));
-  //console.log(Object.getPrototypeOf(users[0]));
-  //console.log(Object.getPrototypeOf(products[0]));
-  //console.log(Object.getPrototypeOf(orders[0]));
+  // console.log('1---', Object.getPrototypeOf(OrderProduct));
+  // console.log('2---', Object.getPrototypeOf(users[0]));
+  // console.log('3---', Object.getPrototypeOf(products[0]));
+  console.log('4---', Object.getPrototypeOf(incompleteOrder[0]));
   
   
   console.log(`seeded ${users.length} users`);
