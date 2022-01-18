@@ -29,11 +29,11 @@ export const getCart = (id) => {
   };
 };
 
-export const removeCartProduct = (id, productId, orderProductId ) => {
+export const removeCartProduct = (id, productId ) => {
   return async (dispatch) => {
     try {
       // console.log('jjjjjjj', productId)
-      const { data } = await axios.delete(`/api/users/${id}/cart/${productId}/${orderProductId}`);
+      const { data } = await axios.delete(`/api/users/${id}/cart/${productId}/`);
       console.log("inside removeCartItem thunk: ", data);
       dispatch(_removeCartProduct(data));
     } catch (error) {

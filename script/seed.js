@@ -129,8 +129,8 @@ async function seed() {
   */
   // console.log('1---', Object.getPrototypeOf(OrderProduct));
   // console.log('2---', Object.getPrototypeOf(users[0]));
-  // console.log('3---', Object.getPrototypeOf(products[0]));
-  console.log('4---', Object.getPrototypeOf(incompleteOrder[0]));
+  // console.log('3---', Object.getPrototypeOf(Order[0]));
+  console.log('4---', Object.getPrototypeOf(completedOrders[0]));
   
   
   console.log(`seeded ${users.length} users`);
