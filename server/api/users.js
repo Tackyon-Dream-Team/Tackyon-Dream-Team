@@ -31,13 +31,14 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/:id/cart', async (req, res, next) => {
   try {
-    const order = await Order.findAll({
+    const order = await Order.findOne({
       where: {
         userId: req.params.id,
         activeOrder: 'Incomplete'
       },
       include: Product
     })
+    console.log('------', order.dataValues.products)
     res.json(order)
   } catch (err) {
     next(err)
@@ -137,7 +138,7 @@ router.put('/:id/cart/:productId', async (req, res, next) => {
 
 router.delete('/:id/cart/:productId/', async (req, res, next) => {
   try {
-    const order = await Order.findAll({
+    const order = await Order.findOne({
       where: {
         activeOrder: 'Incomplete',
         userId: req.params.id
@@ -145,18 +146,18 @@ router.delete('/:id/cart/:productId/', async (req, res, next) => {
       include: Product
     })
 
-    const foundOrderId = order[0].dataValues.id
-
-    const cartItem = await OrderProduct.findAll({
+    const foundOrderId = order.dataValues.id
+    console.log('<<<<order>>>>', order)
+    const cartItem = await OrderProduct.findOne({
       where: {
         orderId: foundOrderId,
         productId: req.params.productId
       },
     })
-    console.log('------cartIIIItem----', cartItem[0])
-    await cartItem[0].destroy()//if removed we make it to the action
+    console.log('------cartIIIItem----', cartItem)
+    await cartItem.destroy()//if removed we make it to the action
 
-    res.json(order)
+    res.json(cartItem)
   } catch(err) {
     next(err)
   }

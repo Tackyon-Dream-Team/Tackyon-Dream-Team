@@ -21,6 +21,8 @@ class Cart extends React.Component {
     }
   }
 
+  
+
   render() {
       
     const cart = this.props.cart || [];
@@ -32,16 +34,15 @@ class Cart extends React.Component {
         <em>If you cannot place an item in your cart, your browser might not support cookies. Learn more</em>
       </div>)
     } else {
-      const products = cart[0].products;
-      const userId = cart[0].userId
-      console.log("!!!!cartItems!!!!", products[0].orderProduct);
+      const products = cart.products;
+      const userId = cart.userId
+      console.log("!!!!cartItems!!!!", products);
       return (
       <>  
         <h1>Your Shopping Cart</h1>
         <div id="cartItems">
           {products.map((product) => {
             const orderProductId = product.orderProduct.orderId;
-            console.log(orderProductId)
             return (
               <div key={product.id}>
                 <h1>{product.name}</h1>
@@ -83,15 +84,16 @@ class Cart extends React.Component {
 
 
 const mapState = (state) => {
+  console.log('<<<<<state>>>>', state)
   return {
     cart: state.Cart,
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, {history}) => {
   return {
     loadCart: (id) => dispatch(getCart(id)),
-    removeCartProduct: (id, productId) => dispatch(removeCartProduct(id, productId))
+    removeCartProduct: (id, productId) => dispatch(removeCartProduct(id, productId, history))
   };
 };
 

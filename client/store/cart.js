@@ -29,13 +29,14 @@ export const getCart = (id) => {
   };
 };
 
-export const removeCartProduct = (id, productId ) => {
+export const removeCartProduct = (id, productId, history ) => {
   return async (dispatch) => {
     try {
       // console.log('jjjjjjj', productId)
       const { data } = await axios.delete(`/api/users/${id}/cart/${productId}/`);
       console.log("inside removeCartItem thunk: ", data);
       dispatch(_removeCartProduct(data));
+      history.push(`/users/${id}/cart`)
     } catch (error) {
       console.log("error in REMOVE_CART_PRODUCT thunk", error);
     }
@@ -47,7 +48,7 @@ export default function CartReducer(state = [], action) {
     case SET_CART:
       return action.cart;
     case REMOVE_CART_PRODUCT:
-      return state.cart[0].products.filter(product => product.id !== action.product.id )
+      return state.filter((product) => product.id !== action.product.productId )
     default:
       return state;
   }
