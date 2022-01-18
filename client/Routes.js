@@ -12,6 +12,7 @@ import AllOrders from "./components/AllOrders";
 import AllProducts from "./components/AllProducts";
 import CheckoutOrder from "./components/CheckoutOrder";
 import Cart from "./components/Cart";
+import Admin from "./components/Admin";
 
 /**
  * COMPONENT
@@ -58,6 +59,7 @@ class Routes extends Component {
           <Route path="/users/:id/cart/checkout" component={CheckoutOrder} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/users/:id/admin" component={Admin} />
         </Switch>
       </div>
     );
