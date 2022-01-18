@@ -8,7 +8,6 @@ import singleProductReducer from "./singleProduct";
 import singleOrderReducer from "./singleOrder";
 import CartReducer from "./cart";
 import Orders from "./Orders";
-import CartReducer from './cart'
 
 const reducer = combineReducers({
   auth,
@@ -16,7 +15,7 @@ const reducer = combineReducers({
   singleProduct: singleProductReducer,
   singleOrder: singleOrderReducer,
   Orders,
-  Cart: CartReducer
+  Cart: CartReducer,
 });
 
 const middleware = composeWithDevTools(
