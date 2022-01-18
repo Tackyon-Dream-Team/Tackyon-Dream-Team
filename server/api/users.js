@@ -112,18 +112,25 @@ router.put('/:id/cart/:productId', async (req, res, next) => {
   }
 })
 
-router.delete('/:id/cart/:index', async (req, res, next) => {
+router.delete('/:id/cart/:productId', async (req, res, next) => {
   try {
-    const cart = await Order.findAll({
+    const order = await Order.findAll({
       where: {
+        activeOrder: 'Incomplete',
         userId: req.params.id
-      },
-      include: Product
+      }
     })
-    const product = cart[0].products[req.params.index] //await Product.findByPk(req.params.productId)
-    console.log('delete route in api', product)
-    // await cart.removeProduct(product) if removed we make it to the action
-    res.json(product)
+    console.log('delete route in api--------', order.order.dataValues.id)
+
+    const cartItem = await OrderProduct.findAll({
+      where: {
+        orderId: order.dataValues.id,
+        productId: req.params.productId
+      },
+    })
+    // const product = cart[0].products[req.params.index] //await Product.findByPk(req.params.productId)
+    // await cart.removeOrderProduct(product.id) //if removed we make it to the action
+    res.json(order)
   } catch(err) {
     next(err)
   }
