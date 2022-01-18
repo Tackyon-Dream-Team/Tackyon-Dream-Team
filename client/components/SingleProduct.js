@@ -6,7 +6,8 @@ import { addToCart } from '../store/orderProduct'
 const initState = {
     quantity: 1,
     productId: 0,
-    price: 0
+    price: 0,
+    selectQuantity: '1'
 }
 
 class SingleProduct extends React.Component {
@@ -38,7 +39,7 @@ class SingleProduct extends React.Component {
     handleChange(event) {
         if (Number(event.target.value) > this.props.product.quantity) {
             alert(`Only ${this.props.product.quantity} left in stock`)
-            this.setState({quantity: this.props.product.quantity})
+            this.setState({quantity: this.props.product.quantity, selectQuantity: String(this.props.product.quantity)})
         } else {
             this.setState({quantity: Number(event.target.value)})
         }
@@ -57,7 +58,7 @@ class SingleProduct extends React.Component {
             <img src={product.imageUrl} className = 'SinglePicture'/>
             <form id='Add-Cart-Form' onSubmit={this.handleSubmit}>
                 <label>Quantity: </label>
-                <select onChange={this.handleChange}>
+                <select name='selectQuantity' onChange={this.handleChange} value={this.state.selectQuantity}>
                     <option value='1'>1</option>
                     <option value='2'>2</option>
                     <option value='3'>3</option>
