@@ -12,6 +12,7 @@ class Navbar extends React.Component {
     const { user } = this.props || {name: '', id: 0}
     return (
       <div>
+        <Link to='/'>Home</Link>
         {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
