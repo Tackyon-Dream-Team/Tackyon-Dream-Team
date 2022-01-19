@@ -41,7 +41,7 @@ class SingleProduct extends React.Component {
             alert(`Only ${this.props.product.quantity} left in stock`)
             this.setState({quantity: this.props.product.quantity, selectQuantity: String(this.props.product.quantity)})
         } else {
-            this.setState({quantity: Number(event.target.value)})
+            this.setState({quantity: Number(event.target.value), selectQuantity: event.target.value})
         }
     }
     
