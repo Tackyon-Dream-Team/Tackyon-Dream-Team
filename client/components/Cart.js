@@ -34,26 +34,27 @@ class Cart extends React.Component {
         <em>If you cannot place an item in your cart, your browser might not support cookies. Learn more</em>
       </div>)
     } else {
-      const products = cart.products;
+      // const products = cart.products;
       const userId = cart.userId
-      console.log("!!!!cartItems!!!!", products);
+      // console.log("!!!!cartItems!!!!", products);
       return (
       <>  
         <h1>Your Shopping Cart</h1>
         <div id="cartItems">
           {cart.map((product) => {
-            const orderProductId = product.orderProduct.orderId;
+            const {name, imageUrl, price} = product.product;
+            console.log('-----------', product)
             return (
-              <div key={product.id}>
-                <h1>{product.name}</h1>
+              <div key={product.productId}>
+                <h1>{name}</h1>
                 <h3>
-                  ${Math.floor(product.price / 100)}.{product.price % 100}
+                  ${Math.floor(price / 100)}.{price % 100}
                 </h3>
                 <div className="edit-cart">
                   <form onSubmit={(ev) => ev.preventDefault()}>
                     <button name="decr-bttn">-</button>
                   </form>
-                  <span>{product.quantity}</span>
+                  <div>{product.orderQuantity}</div>
                   <form onSubmit={(ev) => ev.preventDefault()}>
                     <button className="incr-bttn" onClick={() => this.props.increaseProductQuantity(userId, product.id)}>+</button>
                   </form>
@@ -61,17 +62,17 @@ class Cart extends React.Component {
                     <button className="remove-bttn" onClick={() => this.props.removeCartProduct(userId, product.id)}>remove</button>
                   </form>
                 </div>
-                <img src={product.imageUrl} className="SinglePicture" />
+                <img src={imageUrl} className="SinglePicture" />
               </div>
             );
           })}
         </div>
         <div id="Order-summary">
           <div id="total">
-            Subtotal ({ products.map(product => product.quantity)
+            Subtotal ({ cart.map(product => product.orderQuantity)
                 .reduce((acum, currVal) => acum + currVal)} item(s)): $
               {
-                products.map(product => product.price * product.quantity)
+                cart.map(product => product.product.price * product.orderQuantity)
                 .reduce((acum, currVal) => acum + currVal)/100
                 
               }

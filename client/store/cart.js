@@ -29,9 +29,9 @@ const _increaseProductQuantity = (product) => {
 export const getCart = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${id}/cartItems`);
-      console.log("indside cart thunk: ", data);
-      dispatch(setCart(data));
+      const { data: orderProducts } = await axios.get(`/api/users/${id}/cartItems`);
+      console.log("indside cart thunk: ", orderProducts);
+      dispatch(setCart(orderProducts));
     } catch (error) {
       console.log("error in cart thunk", error);
     }

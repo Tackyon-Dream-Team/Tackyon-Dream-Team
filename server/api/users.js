@@ -59,7 +59,7 @@ router.get('/:id/cartItems', async (req, res, next) => {
       },
       include: Product
     })
-    console.log('XXXXXXXXXXXXXXXXXXX ORDER IN GET XXXXXXXXXXXXXXXXXXXXXXX', orderProducts)
+    // console.log('XXXXXXXXXXXXXXXXXXX ORDER IN GET XXXXXXXXXXXXXXXXXXXXXXX', orderProducts)
     res.json(orderProducts)
   } catch (err) {
     next(err)
