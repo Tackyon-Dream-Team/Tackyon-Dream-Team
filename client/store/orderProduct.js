@@ -44,8 +44,10 @@ export const addToCart = (userId, productId, quantity, price) => {
 */
 
 export const addToCart = (userId, productId, quantity, price) => {
+  console.log('made it into TOP LAYER atc')
   return async (dispatch) => {
     try {
+      console.log('made it into ATC')
       const { data } = await axios.get(`/api/users/${userId}/cart`)
       const findOrCreate = await axios.put(`/api/orderProducts/${data.id}/${productId}`, {orderId: data.id, productId: productId, orderQuantity: quantity, orderPrice: price})
       dispatch(_editCart(findOrCreate))

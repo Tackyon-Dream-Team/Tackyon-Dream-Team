@@ -100,14 +100,13 @@ const mapDispatch = dispatch => {
       const username = evt.target.username.value
       const password = evt.target.password.value
       
-      const firstName = evt.target.firstName.value
-      const lastName = evt.target.lastName.value
-      const email = evt.target.email.value
-      const imageUrl = evt.target.imageUrl.value || 'https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png'
-      
       if (formName === 'login') {
         dispatch(authenticate(username, password, formName)) 
       } else {
+        const firstName = evt.target.firstName.value || ''
+        const lastName = evt.target.lastName.value || ''
+        const email = evt.target.email.value || ''
+        const imageUrl = evt.target.imageUrl.value || 'https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png'
         dispatch(authenticateSignUp(username, password, firstName, lastName, email, imageUrl))
       }
     }
