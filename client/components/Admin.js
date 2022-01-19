@@ -14,7 +14,9 @@ export const Home = (props) => {
       <h3>Welcome, {username}!</h3>
       <AdminProducts />
       <br />
-      <button>Add New Product</button>
+      <button onClick={() => props.history.push("/users/newproduct")}>
+        Add New Product
+      </button>
       <Users />
     </div>
   );

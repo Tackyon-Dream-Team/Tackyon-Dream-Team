@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getProducts, removeProduct } from "../store/Products";
-
 class AdminProducts extends React.Component {
   constructor() {
     super();

@@ -2,6 +2,7 @@ import axios from "axios";
 
 const SET_PRODUCTS = "SET_PRODUCTS";
 const REMOVE_PRODUCT = "REMOVE_PRODUCT";
+const CREATE_PRODUCT = "CREATE_PRODUCT";
 
 const setProducts = (products) => ({
   type: SET_PRODUCTS,
@@ -10,6 +11,11 @@ const setProducts = (products) => ({
 
 const _removeProduct = (product) => ({
   type: REMOVE_PRODUCT,
+  product,
+});
+
+const _createProduct = (product) => ({
+  type: CREATE_PRODUCT,
   product,
 });
 
@@ -37,6 +43,17 @@ export const removeProduct = (productId) => {
   };
 };
 
+export const createProduct = (product) => {
+  return async (dispatch) => {
+    try {
+      const { data: created } = await axios.post("api/products", product);
+      dispatch(_createProduct(created));
+    } catch (error) {
+      console.log("error in createProduct thunk", error);
+    }
+  };
+};
+
 const intialState = [];
 
 export default function ProductsReducer(state = intialState, action) {
@@ -47,6 +64,8 @@ export default function ProductsReducer(state = intialState, action) {
       return state.filter(
         (product) => product.productId !== action.product.productId
       );
+    case CREATE_PRODUCT:
+      return [...state, action.product];
     default:
       return state;
   }
