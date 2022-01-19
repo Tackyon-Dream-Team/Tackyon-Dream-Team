@@ -38,8 +38,29 @@ router.get('/:id/cart', async (req, res, next) => {
       },
       include: Product
     })
-    console.log('------', order.dataValues.products)
+    console.log('XXXXXXXXXXXXXXXXXXX ORDER IN GET XXXXXXXXXXXXXXXXXXXXXXX', order.dataValues.products)
     res.json(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:id/cartItems', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        userId: req.params.id,
+        activeOrder: 'Incomplete'
+      }
+    })
+    const orderProducts = await OrderProduct.findAll({
+      where: {
+        orderId: order.id,
+      },
+      include: Product
+    })
+    console.log('XXXXXXXXXXXXXXXXXXX ORDER IN GET XXXXXXXXXXXXXXXXXXXXXXX', orderProducts)
+    res.json(orderProducts)
   } catch (err) {
     next(err)
   }
@@ -132,6 +153,7 @@ router.put('/:id/cart/:productId', async (req, res, next) => {
         productId: req.params.productId
       }
     })
+    console.log('____________CART ITEM IN EDIT ________________', editCartItem)
     res.json(await editCartItem.update(req.body))
   } catch(err) {
     next(err)

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getCart, removeCartProduct } from "../store/cart";
+import { getCart, removeCartProduct, increaseProductQuantity } from "../store/cart";
 
 
 class Cart extends React.Component {
@@ -50,9 +50,13 @@ class Cart extends React.Component {
                   ${Math.floor(product.price / 100)}.{product.price % 100}
                 </h3>
                 <div className="edit-cart">
-                  <button name="incr-bttn">-</button>
+                  <form onSubmit={(ev) => ev.preventDefault()}>
+                    <button name="decr-bttn">-</button>
+                  </form>
                   <span>{product.quantity}</span>
-                  <button name="decr-bttn">+</button>
+                  <form onSubmit={(ev) => ev.preventDefault()}>
+                    <button className="incr-bttn" onClick={() => this.props.increaseProductQuantity(userId, product.id)}>+</button>
+                  </form>
                   <form onSubmit={(ev) => ev.preventDefault()}>
                     <button className="remove-bttn" onClick={() => this.props.removeCartProduct(userId, product.id)}>remove</button>
                   </form>
@@ -84,7 +88,7 @@ class Cart extends React.Component {
 
 
 const mapState = (state) => {
-  console.log('<<<<<state>>>>', state.Cart.products)
+  console.log('<<<<<state>>>>', state)
   return {
     cart: state.Cart,
   };
@@ -93,7 +97,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch, {history}) => {
   return {
     loadCart: (id) => dispatch(getCart(id)),
-    removeCartProduct: (id, productId) => dispatch(removeCartProduct(id, productId, history))
+    removeCartProduct: (id, productId) => dispatch(removeCartProduct(id, productId, history)),
+    increaseProductQuantity: (id, productId) => dispatch(increaseProductQuantity(id, productId, history))
   };
 };
 
