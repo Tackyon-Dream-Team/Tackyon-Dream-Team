@@ -41,7 +41,7 @@ class Cart extends React.Component {
       <>  
         <h1>Your Shopping Cart</h1>
         <div id="cartItems">
-          {products.map((product) => {
+          {cart.map((product) => {
             const orderProductId = product.orderProduct.orderId;
             return (
               <div key={product.id}>
