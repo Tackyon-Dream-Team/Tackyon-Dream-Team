@@ -7,13 +7,13 @@ const TOKEN = "token";
  * ACTION TYPES
  */
 const SET_AUTH = "SET_AUTH";
-const SET_NEW_USER = "SET_NEW_USER";
+//const SET_NEW_USER = "SET_NEW_USER";
 
 /**
  * ACTION CREATORS
  */
 const setAuth = (auth) => ({ type: SET_AUTH, auth });
-const setNewUser = (auth) => ({ type: SET_NEW_USER, auth });
+//const setNewUser = (auth) => ({ type: SET_NEW_USER, auth });
 
 /**
  * THUNK CREATORS
@@ -81,8 +81,8 @@ export default function (state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
       return action.auth;
-    case SET_NEW_USER:
-      return action.auth;
+    // case SET_NEW_USER:
+    //   return action.auth;
     default:
       return state;
   }
