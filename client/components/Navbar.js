@@ -35,7 +35,7 @@ class Navbar extends React.Component {
     )
   }
 }
-/**
+/***
  * CONTAINER
  */
 const mapState = state => {
