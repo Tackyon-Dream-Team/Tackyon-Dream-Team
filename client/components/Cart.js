@@ -6,6 +6,21 @@ import { getCart, removeCartProduct, increaseProductQuantity } from "../store/ca
 class Cart extends React.Component {
   constructor(props) {
     super(props);
+    
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+  }
+
+
+  handleChange(event) {
+    console.log('event.target.value', event.target.value)
+    // this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('Your updated quantity is: ' + this.state.value);
+    event.preventDefault();
   }
 
   componentDidMount() {
@@ -43,7 +58,7 @@ class Cart extends React.Component {
         <div id="cartItems">
           {cart.map((product) => {
             const {name, imageUrl, price} = product.product;
-            console.log('-----------', product)
+            console.log('-----cartProduct------', product)
             return (
               <div key={product.productId}>
                 <h1>{name}</h1>
@@ -51,12 +66,22 @@ class Cart extends React.Component {
                   ${Math.floor(price / 100)}.{price % 100}
                 </h3>
                 <div className="edit-cart">
-                  <form onSubmit={(ev) => ev.preventDefault()}>
-                    <button name="decr-bttn">-</button>
-                  </form>
                   <div>{product.orderQuantity}</div>
-                  <form onSubmit={(ev) => ev.preventDefault()}>
-                    <button className="incr-bttn" onClick={() => this.props.increaseProductQuantity(userId, product.id)}>+</button>
+                  <form onSubmit={this.handleSubmit}>
+                    <label for="cartQuantity">Choose a cart Item:</label>
+                    <select value={product.orderQuantity} onChange={this.handleChange}>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                    </select>
+                    <input type="submit" />
                   </form>
                   <form onSubmit={(ev) => ev.preventDefault()}>
                     <button className="remove-bttn" onClick={() => this.props.removeCartProduct(userId, product.id)}>remove</button>
