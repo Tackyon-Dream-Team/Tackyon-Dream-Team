@@ -29,7 +29,8 @@ class NewProduct extends Component {
   }
 
   render() {
-    const { name, description, price, quantity, category } = this.state;
+    const { name, description, price, quantity, category, imageUrl } =
+      this.state;
     const { changeHandler, submitHandler } = this;
 
     return (
@@ -49,10 +50,15 @@ class NewProduct extends Component {
         <label htmlFor="category">Category</label>
         {/* <input name="category" onChange={changeHandler} value={category} /> */}
         <select name="category" onChange={changeHandler} value={category}>
-          <option value="None">Nonexb</option>
+          <option value="None">None</option>
           <option value="Electronics">Electronics</option>
           <option value="Shoes">Shoes</option>
+          <option value="Jackets">Jackets</option>
+          <option value="Sporting Equipment">Sporting Equipment</option>
+          <option value="Miscellaneous">Miscellaneous</option>
         </select>
+        <label htmlFor="imageUrl">Product Image</label>
+        <input name="imageUrl" onChange={changeHandler} value={imageUrl} />
         <button type="submit">Submit</button>
       </form>
     );
