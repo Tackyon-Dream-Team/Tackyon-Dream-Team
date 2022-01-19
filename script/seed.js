@@ -75,6 +75,7 @@ async function seed() {
       name: "Snow Boots",
       description: "keeps the feet at exactly 70°F at all times",
       price: 11999,
+      quantity: 5
     }),
     Product.create({
       name: "Tent",

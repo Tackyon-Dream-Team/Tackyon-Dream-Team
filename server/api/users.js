@@ -1,49 +1,59 @@
-const router = require('express').Router()
-const { models: { User, Order, Product, OrderProduct }} = require('../db')
+const router = require("express").Router();
+const {
+  models: { User, Order, Product, OrderProduct },
+} = require("../db");
+const { requireToken, isAdmin } = require("./gatekeeper");
 
-module.exports = router
+module.exports = router;
 
-router.get('/', async (req, res, next) => {
+router.get("/", requireToken, isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'username']
-    })
-    res.json(users)
+      attributes: ["id", "username"],
+    });
+    res.json(users);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
+router.get("/all", async (req, res, next) => {
+  try {
+    const users = await User.findAll();
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+});
 
-
-router.get('/:id', async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const singleUser = await User.findByPk(req.params.id, {
-      attributes: ['id', 'username']
-    })
-    res.json(singleUser)
+      attributes: ["id", "username"],
+    });
+    res.json(singleUser);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
-router.get('/:id/cart', async (req, res, next) => {
+router.get("/:id/cart", async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
         userId: req.params.id,
-        activeOrder: 'Incomplete'
+        activeOrder: "Incomplete",
       },
       include: Product
     })
     console.log('XXXXXXXXXXXXXXXXXXX ORDER IN GET XXXXXXXXXXXXXXXXXXXXXXX', order.dataValues.products)
     res.json(order)
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 router.get('/:id/cartItems', async (req, res, next) => {
   try {
@@ -71,70 +81,69 @@ router.get('/:id/orders', async (req, res, next) => {
     const order = await Order.findAll({
       where: {
         userId: req.params.id,
-        activeOrder: 'Completed'
+        activeOrder: "Completed",
       },
-      include: Product
-    })
-    res.json(order)
-  } catch(err) {
-    next(err)
+      include: Product,
+    });
+    res.json(order);
+  } catch (err) {
+    next(err);
   }
-})
+});
 
-router.get('/:id/orders/:orderId', async (req, res, next) => {
+router.get("/:id/orders/:orderId", async (req, res, next) => {
   try {
     const singleOrder = await Order.findAll({
       where: {
         userId: req.params.id,
-        id: req.params.orderId
+        id: req.params.orderId,
       },
-      include: Product
-    })
-    res.json(singleOrder)
+      include: Product,
+    });
+    res.json(singleOrder);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 //edit cart - when we say we're editing a cart, we're really only changing the order status
-router.put('/:id/cart', async (req, res, next) => {
+router.put("/:id/cart", async (req, res, next) => {
   try {
     const editOrder = await Order.findAll({
       where: {
         userId: req.params.id,
-        activeOrder: 'Incomplete'
-      }
-    })
-    res.json(await editOrder.update(req.body))
+        activeOrder: "Incomplete",
+      },
+    });
+    res.json(await editOrder.update(req.body));
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
-router.post('/:id/cart', async (req, res, next) => {
+router.post("/:id/cart", async (req, res, next) => {
   try {
-    res.json(await OrderProduct.create(req.body))
-  } catch(err) {
-    next(err)
+    res.json(await OrderProduct.create(req.body));
+  } catch (err) {
+    next(err);
   }
-})
+});
 ///////////////////////////////////////////////////////////////////////
 
 //Changing activeOrder field from 'Incomplete' to 'Completed'
-router.put('/:id/cart', async (req, res, next) => {
+router.put("/:id/cart", async (req, res, next) => {
   try {
     const checkoutOrder = await Order.findAll({
       where: {
-        userId:req.params.id,
-        activeOrder: 'Incomplete'
-      }
-    })
-    res.json(await checkoutOrder.update({activeOrder: 'Completed'}))
-  } catch(err) {
-    next(err)
+        userId: req.params.id,
+        activeOrder: "Incomplete",
+      },
+    });
+    res.json(await checkoutOrder.update({ activeOrder: "Completed" }));
+  } catch (err) {
+    next(err);
   }
-})
-
+});
 
 router.put('/:orderId/cart/:productId', async (req, res, next) => {
   try {
@@ -160,7 +169,7 @@ router.put('/:orderId/cart/:productId', async (req, res, next) => {
   } catch(err) {
     next(err)
   }
-})
+});
 
 router.delete('/:orderId/cart/:productId/', async (req, res, next) => {
   try {
@@ -187,15 +196,15 @@ router.delete('/:orderId/cart/:productId/', async (req, res, next) => {
   } catch(err) {
     next(err)
   }
-})
+});
 
 //edit user
-router.put('/:id', async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
-    const editUser = await User.findByPk(req.params.id)
-    res.json(await editUser.update(req.body))
-  } catch(err) {
-    next(err)
+    const editUser = await User.findByPk(req.params.id);
+    res.json(await editUser.update(req.body));
+  } catch (err) {
+    next(err);
   }
 })
 

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getCart, removeCartProduct, updateProductQuantity } from "../store/cart";
 
-
 class Cart extends React.Component {
   constructor(props) {
     super(props);
@@ -45,13 +44,9 @@ class Cart extends React.Component {
 
   componentDidMount() {
     try {
-
-      this.props.loadCart(
-        this.props.match.params.id,
-      );
+      this.props.loadCart(this.props.match.params.id);
       console.log("cart Component did mount: ", this.props);
     } catch (err) {
-
       console.log("error in cart componentDidMount: ", err);
     }
   }
@@ -59,14 +54,18 @@ class Cart extends React.Component {
   
 
   render() {
-    const cart = this.props.cart;
-    console.log('render cart!!!! ' , this.state)
+    const cart = this.props.cart || [];
+    console.log("render cart ", cart);
     if (cart.length === 0) {
       return (
-      <div>
-        <h1>Your Shopping Cart is Empty</h1>
-        <em>If you cannot place an item in your cart, your browser might not support cookies. Learn more</em>
-      </div>)
+        <div>
+          <h1>Your Shopping Cart is Empty</h1>
+          <em>
+            If you cannot place an item in your cart, your browser might not
+            support cookies. Learn more
+          </em>
+        </div>
+      );
     } else {
       // const products = cart.products;
       const { orderId } = cart
@@ -121,16 +120,13 @@ class Cart extends React.Component {
                 
               }
             </div>
-        </div>
-        <button>Proceed to checkout</button>
-
-      </>  
-    
+          </div>
+          <button>Proceed to checkout</button>
+        </>
       );
     }
   }
 }
-
 
 const mapState = (state) => {
   console.log('<<<<<state>>>>', state)

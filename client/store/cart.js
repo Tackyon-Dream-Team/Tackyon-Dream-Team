@@ -14,9 +14,9 @@ export const setCart = (cart) => {
 const _removeCartProduct = (product) => {
   return {
     type: REMOVE_CART_PRODUCT,
-    product
-  }
-}
+    product,
+  };
+};
 
 const _updateProductQuantity = (product) => {
   console.log('&&&&&&&&&&&&&&&&&&&&*********', product)
@@ -50,7 +50,7 @@ export const removeCartProduct = (orderId, productId, history ) => {
       console.log("error in REMOVE_CART_PRODUCT thunk", error);
     }
   };
-}
+};
 
 export const updateProductQuantity = (orderId, productId, newQuantity,history) => {
   return async (dispatch) => {
