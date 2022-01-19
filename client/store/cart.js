@@ -2,7 +2,7 @@ import axios from "axios";
 
 const SET_CART = "SET_CART";
 const REMOVE_CART_PRODUCT = "REMOVE_CART_PRODUCT"
-const INCREASE_PRODUCT_QUANTITY = 'INCREASE_PRODUCT_QUANTITY'
+const UPDATE_PRODUCT_QUANTITY = 'UPDATE_PRODUCT_QUANTITY'
 
 export const setCart = (cart) => {
   return {
@@ -18,7 +18,7 @@ const _removeCartProduct = (product) => {
   }
 }
 
-const _increaseProductQuantity = (product) => {
+const _updateProductQuantity = (product) => {
   console.log('&&&&&&&&&&&&&&&&&&&&*********', product)
   return {
     type: REMOVE_CART_PRODUCT,
@@ -52,7 +52,7 @@ export const removeCartProduct = (id, productId, history ) => {
   };
 }
 
-export const increaseProductQuantity = (id, productId, history) => {
+export const updateProductQuantity = (id, productId, history) => {
   return async (dispatch) => {
     try {
       
@@ -72,7 +72,7 @@ export default function CartReducer(state = [], action) {
       return state.Cart.products.filter((product) => product.id !== action.product.productId )
       // /[...state, state.Cart.products.filter((product) => product.id !== action.product.productId )]
       // state.Cart.products.filter((product) => product.id !== action.product.productId )
-    case INCREASE_PRODUCT_QUANTITY:
+    case UPDATE_PRODUCT_QUANTITY:
       return state
     default:
       return state;

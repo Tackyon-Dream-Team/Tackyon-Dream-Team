@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getCart, removeCartProduct, increaseProductQuantity } from "../store/cart";
+import { getCart, removeCartProduct, updateProductQuantity } from "../store/cart";
 
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
+    this.state = this.props.cart || []
     
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -13,8 +14,14 @@ class Cart extends React.Component {
   }
 
 
-  handleChange(event) {
+  handleChange(product, event) {
     console.log('event.target.value', event.target.value)
+    console.log('handlechgange product', product)
+    // this.setState([...this.cart, orderQuantity: {orderQuantity: event.target.value}])
+    const tempState = this.state
+    const result = tempState.map(cartItem => cartItem.productId === product.productId ? cartItem.orderQuantity = event.target.value : cartItem)
+    this.setState(result)
+    // if(Number(event.target.value) > )
     // this.setState({value: event.target.value});
   }
 
@@ -40,8 +47,8 @@ class Cart extends React.Component {
 
   render() {
       
-    const cart = this.props.cart || [];
-    console.log('render cart ' , cart)
+    const cart = this.props.cart;
+    console.log('render cart!!!! ' , cart)
     if (cart.length === 0) {
       return (
       <div>
@@ -67,9 +74,9 @@ class Cart extends React.Component {
                 </h3>
                 <div className="edit-cart">
                   <div>{product.orderQuantity}</div>
-                  <form onSubmit={this.handleSubmit}>
-                    <label for="cartQuantity">Choose a cart Item:</label>
-                    <select value={product.orderQuantity} onChange={this.handleChange}>
+                  <form id="update-cart-Quantity" onSubmit={this.handleSubmit}>
+                    <label>Choose a cart Item:</label>
+                    <select value={product.orderQuantity} onChange={(event) => this.handleChange(product, event)}>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -124,7 +131,7 @@ const mapDispatch = (dispatch, {history}) => {
   return {
     loadCart: (id) => dispatch(getCart(id)),
     removeCartProduct: (id, productId) => dispatch(removeCartProduct(id, productId, history)),
-    increaseProductQuantity: (id, productId) => dispatch(increaseProductQuantity(id, productId, history))
+    updateProductQuantity: (id, productId) => dispatch(updateProductQuantity(id, productId, history))
   };
 };
 
