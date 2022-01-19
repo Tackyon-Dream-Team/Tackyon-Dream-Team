@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { fetchSingleProduct } from '../store/singleProduct'
+import { fetchSingleProduct, decreaseStock } from '../store/singleProduct'
 import { addToCart } from '../store/orderProduct'
 
 const initState = {
@@ -22,8 +22,9 @@ class SingleProduct extends React.Component {
         event.preventDefault()
         console.log('======handlesubmit=======', this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
         this.props.addToCart(this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
+        this.props.decreaseStock(this.state.productId, this.state.quantity)
         this.setState(initState)
-        this.props.history.push(`/CartOrContinue`)
+        this.props.history.push(`/users/${this.props.user.id}/cart`)
     }
     
     async componentDidMount() {
@@ -88,7 +89,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch, {history}) => {
     return {
         loadSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
-        addToCart: (userId, productId, quantity, price) => dispatch(addToCart(userId, productId, quantity, price))
+        addToCart: (userId, productId, quantity, price) => dispatch(addToCart(userId, productId, quantity, price)),
+        decreaseStock: (productId, decrement) => dispatch(decreaseStock(productId, decrement))
     }
 }
 

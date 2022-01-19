@@ -47,11 +47,7 @@ export const addToCart = (userId, productId, quantity, price) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/users/${userId}/cart`)
-      console.log('=========DATA FROM ATC FIRST AXIOS', data)
-      
       const findOrCreate = await axios.put(`/api/orderProducts/${data.id}/${productId}`, {orderId: data.id, productId: productId, orderQuantity: quantity, orderPrice: price})
-      console.log('=========DATA FROM ATC SECOND AXIOS', findOrCreate)
-      
       dispatch(_editCart(findOrCreate))
     } catch(err) {
       console.log('error in addToCartThunk', err)

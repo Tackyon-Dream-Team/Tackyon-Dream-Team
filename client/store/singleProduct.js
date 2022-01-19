@@ -22,6 +22,18 @@ export const fetchSingleProduct = (id) => {
     }
 }
 
+export const decreaseStock = (productId, decrement) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.put(`/api/products/decrement/${productId}`, {decrement: decrement})
+            console.log('=====DATA FROM DECREASE STOCK====', data)
+            dispatch(setSingleProduct(data))
+        } catch(err) {
+            console.log('Error in decreaseStock: ', err)
+        }
+    }
+}
+
 // const initialState = {
 //     singleProduct: {},
 // }
