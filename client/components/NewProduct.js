@@ -10,7 +10,7 @@ class NewProduct extends Component {
       description: "",
       price: "",
       quantity: "",
-      category: "",
+      category: "None",
     };
     this.submitHandler = this.submitHandler.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
@@ -49,16 +49,9 @@ class NewProduct extends Component {
         <label htmlFor="category">Category</label>
         {/* <input name="category" onChange={changeHandler} value={category} /> */}
         <select name="category" onChange={changeHandler} value={category}>
-          <option value="category">Electronics</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
+          <option value="None">Nonexb</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Shoes">Shoes</option>
         </select>
         <button type="submit">Submit</button>
       </form>
