@@ -40,6 +40,18 @@ export const authenticate =
     }
   };
 
+export const authenticateSignUp = (username, password, firstName, lastName, email, imageUrl) =>
+  async (dispatch) => {
+    try {
+      const res = await axios.post(`/auth/signup`, {username, password, firstName, lastName, email, imageUrl})
+      window.localStorage.setItem(TOKEN, res.data.token)
+      dispatch(me())
+    } catch(err) {
+      return dispatch(setAuth({error: err}))
+    }
+  }
+
+
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   history.push("/");
