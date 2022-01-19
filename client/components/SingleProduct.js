@@ -1,12 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { fetchSingleProduct } from '../store/singleProduct'
+import { fetchSingleProduct, decreaseStock } from '../store/singleProduct'
 import { addToCart } from '../store/orderProduct'
 
 const initState = {
     quantity: 1,
     productId: 0,
-    price: 0
+    price: 0,
+    selectQuantity: '1'
 }
 
 class SingleProduct extends React.Component {
@@ -18,11 +19,19 @@ class SingleProduct extends React.Component {
     }
     
     handleSubmit(event, productId) {
-        event.preventDefault()
-        console.log('======handlesubmit=======', this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
-        this.props.addToCart(this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
-        this.setState(initState)
-        this.props.history.push(`/CartOrContinue`)
+        if (Object.keys(this.props.user).length > 0) {
+            event.preventDefault()
+            //console.log('======handlesubmit=======', this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
+            this.props.addToCart(this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
+            //this.props.decreaseStock(this.state.productId, this.state.quantity)
+            this.setState(initState)
+            this.props.history.push(`/users/${this.props.user.id}/cart`)    
+        } else {
+            let localCart = window.localStorage.getItem('guestCart')
+            localCart = localCart ? JSON.parse(localCart) : []
+            localCart.push({orderId: 0, productId: this.state.productId, orderQuantity: this.state.quantity, orderPrice: this.state.price})
+            window.localStorage.setItem('guestCart', JSON.stringify(localCart))
+        }
     }
     
     async componentDidMount() {
@@ -38,9 +47,9 @@ class SingleProduct extends React.Component {
     handleChange(event) {
         if (Number(event.target.value) > this.props.product.quantity) {
             alert(`Only ${this.props.product.quantity} left in stock`)
-            this.setState({quantity: this.props.product.quantity})
+            this.setState({quantity: this.props.product.quantity, selectQuantity: String(this.props.product.quantity)})
         } else {
-            this.setState({quantity: Number(event.target.value)})
+            this.setState({quantity: Number(event.target.value), selectQuantity: event.target.value})
         }
     }
     
@@ -57,7 +66,7 @@ class SingleProduct extends React.Component {
             <img src={product.imageUrl} className = 'SinglePicture'/>
             <form id='Add-Cart-Form' onSubmit={this.handleSubmit}>
                 <label>Quantity: </label>
-                <select onChange={this.handleChange}>
+                <select name='selectQuantity' onChange={this.handleChange} value={this.state.selectQuantity}>
                     <option value='1'>1</option>
                     <option value='2'>2</option>
                     <option value='3'>3</option>
@@ -78,6 +87,7 @@ class SingleProduct extends React.Component {
 
 const mapState = (state) => {
     console.log('======userSP=====', state.auth)
+    console.log(Object.keys(state.auth).length)
     return {
         user: state.auth,
         product: state.singleProduct,
@@ -87,7 +97,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch, {history}) => {
     return {
         loadSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
-        addToCart: (userId, productId, quantity, price) => dispatch(addToCart(userId, productId, quantity, price))
+        addToCart: (userId, productId, quantity, price) => dispatch(addToCart(userId, productId, quantity, price)),
+        decreaseStock: (productId, decrement) => dispatch(decreaseStock(productId, decrement))
     }
 }
 

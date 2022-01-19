@@ -43,6 +43,17 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+router.put("/decrement/:id", async (req, res, next) => {
+  try {
+    const edit = await Product.findByPk(req.params.id);
+    res.json(
+      await edit.update({ quantity: edit.quantity - req.body.decrement })
+    );
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.delete("/:id", async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
