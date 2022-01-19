@@ -84,7 +84,7 @@ class Cart extends React.Component {
 
 
 const mapState = (state) => {
-  console.log('<<<<<state>>>>', state)
+  console.log('<<<<<state>>>>', state.Cart.products)
   return {
     cart: state.Cart,
   };

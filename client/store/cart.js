@@ -48,7 +48,9 @@ export default function CartReducer(state = [], action) {
     case SET_CART:
       return action.cart;
     case REMOVE_CART_PRODUCT:
-      return state.filter((product) => product.id !== action.product.productId )
+      return state.Cart.products.filter((product) => product.id !== action.product.productId )
+      // /[...state, state.Cart.products.filter((product) => product.id !== action.product.productId )]
+      // state.Cart.products.filter((product) => product.id !== action.product.productId )
     default:
       return state;
   }

@@ -117,16 +117,18 @@ router.put('/:id/cart', async (req, res, next) => {
 
 router.put('/:id/cart/:productId', async (req, res, next) => {
   try {
-    const cart = await Order.findAll({
+    const order = await Order.findOne({
       where: {
         userId: req.params.id,
         activeOrder: 'Incomplete'
       }, 
       include: Product
     })
-    const editCartItem = await CartProduct.findAll({
+    const foundOrderId = order.dataValues.id
+    
+    const editCartItem = await OrderProduct.findOne({
       where: {
-        cartId: cart[0].id,
+        orderId: foundOrderId,
         productId: req.params.productId
       }
     })

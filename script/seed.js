@@ -106,6 +106,9 @@ async function seed() {
   //previous order 1 has products 3, 4
   await incompleteOrder[0].addProduct(products[2])
   await incompleteOrder[0].addProduct(products[3])
+  await incompleteOrder[0].addProduct(products[1])
+  await incompleteOrder[0].addProduct(products[4])
+  await incompleteOrder[0].addProduct(products[0])
   
   //previous order 2 has product 5
   await completedOrders[0].addProduct(products[4])
