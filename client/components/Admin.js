@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import AdminProducts from "./AdminProducts";
+import Users from "./Users";
 
 /**
  * COMPONENT
@@ -12,6 +13,9 @@ export const Home = (props) => {
     <div>
       <h3>Welcome, {username}!</h3>
       <AdminProducts />
+      <br />
+      <button>Add New Product</button>
+      <Users />
     </div>
   );
 };

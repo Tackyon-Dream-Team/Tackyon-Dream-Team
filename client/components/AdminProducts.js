@@ -11,7 +11,10 @@ class AdminProducts extends React.Component {
     try {
       this.props.getProducts();
     } catch (err) {
-      console.log("error in componentDidMount of AllProducts component: ", err);
+      console.log(
+        "error in componentDidMount of adminProducts component: ",
+        err
+      );
     }
   }
 
@@ -24,8 +27,12 @@ class AdminProducts extends React.Component {
             <div key={product.id}>
               <h1>{product.name}</h1>
               <h3>
-                ${Math.floor(product.price / 100)}.{product.price % 100}
+                {" "}
+                Price: ${Math.floor(product.price / 100)}.{product.price % 100}
               </h3>
+              <p>Description: {product.description}</p>
+              <p>Quantity: {product.quantity}</p>
+              <p>Category: {product.category}</p>
               <img src={product.imageUrl} className="SinglePicture" />
               <span>
                 <button>Edit</button>
