@@ -27,7 +27,7 @@ class Users extends React.Component {
               <span>
                 <img src={user.imageUrl} className="SinglePicture" />
                 <p>Username: {user.username}</p>
-                <p>Name: {user.firstName + user.lastName}</p>
+                <p>Name: {user.firstName + " " + user.lastName}</p>
                 <p>Email: {user.email}</p>
                 <h4>
                   Admin: {user.admin ? <span>Yes</span> : <span>No</span>}

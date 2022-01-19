@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getProducts } from "../store/Products";
+import { getProducts, removeProduct } from "../store/Products";
 
 class AdminProducts extends React.Component {
   constructor() {
@@ -36,7 +36,9 @@ class AdminProducts extends React.Component {
               <img src={product.imageUrl} className="SinglePicture" />
               <span>
                 <button>Edit</button>
-                <button>Delete</button>
+                <button onClick={() => this.props.removeProduct(product.id)}>
+                  Delete
+                </button>
               </span>
             </div>
           );
@@ -55,6 +57,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getProducts: () => dispatch(getProducts()),
+    removeProduct: (product) => dispatch(removeProduct(product)),
   };
 };
 export default connect(mapState, mapDispatch)(AdminProducts);
