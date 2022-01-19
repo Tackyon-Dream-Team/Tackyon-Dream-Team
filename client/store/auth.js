@@ -30,9 +30,8 @@ export const me = () => async (dispatch) => {
     let localCart = window.localStorage.getItem('guestCart')
     if (localCart) {
       localCart = JSON.parse(localCart)
-      localCart.forEach((op) => {
-        console.log('OP', op)
-        dispatch(addToCart(res.data.id, op.productId, op.orderQuantity, op.orderPrice))
+      await localCart.forEach((op) => {
+        console.log('WHOOOPEEE OVER HERE', dispatch(addToCart(res.data.id, op.productId, op.orderQuantity, op.orderPrice)))
       })
       window.localStorage.removeItem('guestCart')
     }

@@ -23,7 +23,7 @@ class SingleProduct extends React.Component {
             event.preventDefault()
             //console.log('======handlesubmit=======', this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
             this.props.addToCart(this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
-            this.props.decreaseStock(this.state.productId, this.state.quantity)
+            //this.props.decreaseStock(this.state.productId, this.state.quantity)
             this.setState(initState)
             this.props.history.push(`/users/${this.props.user.id}/cart`)    
         } else {

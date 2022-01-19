@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { decreaseStock } from './singleProduct'
 
 const ADD_TO_CART = 'ADD_TO_CART'
 const EDIT_CART = 'EDIT_CART'
@@ -44,12 +45,12 @@ export const addToCart = (userId, productId, quantity, price) => {
 */
 
 export const addToCart = (userId, productId, quantity, price) => {
-  console.log('made it into TOP LAYER atc')
   return async (dispatch) => {
     try {
-      console.log('made it into ATC')
       const { data } = await axios.get(`/api/users/${userId}/cart`)
       const findOrCreate = await axios.put(`/api/orderProducts/${data.id}/${productId}`, {orderId: data.id, productId: productId, orderQuantity: quantity, orderPrice: price})
+      //if findOrCreate fails it will throw an error and skip this part of the code
+      dispatch(decreaseStock(productId, quantity))
       dispatch(_editCart(findOrCreate))
     } catch(err) {
       console.log('error in addToCartThunk', err)
