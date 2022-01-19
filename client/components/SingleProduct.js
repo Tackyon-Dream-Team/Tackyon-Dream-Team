@@ -19,12 +19,19 @@ class SingleProduct extends React.Component {
     }
     
     handleSubmit(event, productId) {
-        event.preventDefault()
-        console.log('======handlesubmit=======', this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
-        this.props.addToCart(this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
-        this.props.decreaseStock(this.state.productId, this.state.quantity)
-        this.setState(initState)
-        this.props.history.push(`/users/${this.props.user.id}/cart`)
+        if (Object.keys(this.props.user).length > 0) {
+            event.preventDefault()
+            //console.log('======handlesubmit=======', this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
+            this.props.addToCart(this.props.user.id, this.state.productId, this.state.quantity, this.state.price)
+            this.props.decreaseStock(this.state.productId, this.state.quantity)
+            this.setState(initState)
+            this.props.history.push(`/users/${this.props.user.id}/cart`)    
+        } else {
+            let localCart = window.localStorage.getItem('guestCart')
+            localCart = localCart ? JSON.parse(localCart) : []
+            localCart.push({orderId: 0, productId: this.state.productId, orderQuantity: this.state.quantity, orderPrice: this.state.price})
+            window.localStorage.setItem('guestCart', JSON.stringify(localCart))
+        }
     }
     
     async componentDidMount() {
@@ -80,6 +87,7 @@ class SingleProduct extends React.Component {
 
 const mapState = (state) => {
     console.log('======userSP=====', state.auth)
+    console.log(Object.keys(state.auth).length)
     return {
         user: state.auth,
         product: state.singleProduct,
