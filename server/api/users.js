@@ -136,45 +136,47 @@ router.put('/:id/cart', async (req, res, next) => {
 })
 
 
-router.put('/:id/cart/:productId', async (req, res, next) => {
+router.put('/:orderId/cart/:productId', async (req, res, next) => {
   try {
-    const order = await Order.findOne({
-      where: {
-        userId: req.params.id,
-        activeOrder: 'Incomplete'
-      }, 
-      include: Product
-    })
-    const foundOrderId = order.dataValues.id
+    // const order = await Order.findOne({
+    //   where: {
+    //     userId: req.params.id,
+    //     activeOrder: 'Incomplete'
+    //   }, 
+    //   include: Product
+    // })
+    // const foundOrderId = order.dataValues.id
     
     const editCartItem = await OrderProduct.findOne({
       where: {
-        orderId: foundOrderId,
+        orderId: req.params.orderId,
         productId: req.params.productId
       }
     })
+    
     console.log('____________CART ITEM IN EDIT ________________', editCartItem)
+    
     res.json(await editCartItem.update(req.body))
   } catch(err) {
     next(err)
   }
 })
 
-router.delete('/:id/cart/:productId/', async (req, res, next) => {
+router.delete('/:orderId/cart/:productId/', async (req, res, next) => {
   try {
-    const order = await Order.findOne({
-      where: {
-        activeOrder: 'Incomplete',
-        userId: req.params.id
-      },
-      include: Product
-    })
+    // const order = await Order.findOne({
+    //   where: {
+    //     activeOrder: 'Incomplete',
+    //     userId: req.params.id
+    //   },
+    //   include: Product
+    // })
+    // const foundOrderId = order.dataValues.id
+    // console.log('<<<<order>>>>', order)
 
-    const foundOrderId = order.dataValues.id
-    console.log('<<<<order>>>>', order)
     const cartItem = await OrderProduct.findOne({
       where: {
-        orderId: foundOrderId,
+        orderId: req.params.orderId,
         productId: req.params.productId
       },
     })
@@ -195,4 +197,18 @@ router.put('/:id', async (req, res, next) => {
   } catch(err) {
     next(err)
   }
+})
+
+router.get('/:orderId/:productId', async(req, res, next) => {
+    try {
+        const orderProduct = await OrderProduct.findOne({
+            where: {
+                orderId: req.params.orderId,
+                productId: req.params.productId
+            }
+        })
+        res.json(orderProduct)
+    } catch(err) {
+        next(err)
+    }
 })

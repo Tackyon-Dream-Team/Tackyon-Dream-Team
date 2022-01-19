@@ -15,12 +15,25 @@ class Cart extends React.Component {
 
 
   handleChange(product, event) {
-    console.log('event.target.value', event.target.value)
-    console.log('handlechgange product', product)
+    // console.log('event.target.value', event.target.value)
+    // console.log('handlechgange product', product)
     // this.setState([...this.cart, orderQuantity: {orderQuantity: event.target.value}])
     const tempState = this.state
-    const result = tempState.map(cartItem => cartItem.productId === product.productId ? cartItem.orderQuantity = event.target.value : cartItem)
-    this.setState(result)
+    // console.log('{{{{{{{{{{}}}}}}}}}}}}}}}', tempState)
+    // const result = tempState.map(cartItem => {
+    //     if(cartItem.productId === product.productId){
+    //       cartItem.orderQuantity = Number(event.target.value)
+    //       return cartItem
+    //     }
+    //     return cartItem
+    // })
+    
+    this.props.updateProductQuantity(product.orderId, product.productId, Number(event.target.value))
+    
+    //cartItem.productId === product.productId ? cartItem.orderQuantity = Number(event.target.value) : cartItem)
+    // console.log('IS IT 77777777777', result)
+    // this.setState(result)
+    
     // if(Number(event.target.value) > )
     // this.setState({value: event.target.value});
   }
@@ -46,9 +59,8 @@ class Cart extends React.Component {
   
 
   render() {
-      
     const cart = this.props.cart;
-    console.log('render cart!!!! ' , cart)
+    console.log('render cart!!!! ' , this.state)
     if (cart.length === 0) {
       return (
       <div>
@@ -57,7 +69,7 @@ class Cart extends React.Component {
       </div>)
     } else {
       // const products = cart.products;
-      const userId = cart.userId
+      const { orderId } = cart
       // console.log("!!!!cartItems!!!!", products);
       return (
       <>  
@@ -91,7 +103,7 @@ class Cart extends React.Component {
                     <input type="submit" />
                   </form>
                   <form onSubmit={(ev) => ev.preventDefault()}>
-                    <button className="remove-bttn" onClick={() => this.props.removeCartProduct(userId, product.id)}>remove</button>
+                    <button className="remove-bttn" onClick={() => this.props.removeCartProduct(product.orderId, product.productId)}>remove</button>
                   </form>
                 </div>
                 <img src={imageUrl} className="SinglePicture" />
@@ -131,7 +143,7 @@ const mapDispatch = (dispatch, {history}) => {
   return {
     loadCart: (id) => dispatch(getCart(id)),
     removeCartProduct: (id, productId) => dispatch(removeCartProduct(id, productId, history)),
-    updateProductQuantity: (id, productId) => dispatch(updateProductQuantity(id, productId, history))
+    updateProductQuantity: (id, productId, newQuantity) => dispatch(updateProductQuantity(id, productId, newQuantity, history))
   };
 };
 

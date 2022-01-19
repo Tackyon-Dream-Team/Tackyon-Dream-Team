@@ -38,25 +38,28 @@ export const getCart = (id) => {
   };
 };
 
-export const removeCartProduct = (id, productId, history ) => {
+export const removeCartProduct = (orderId, productId, history ) => {
   return async (dispatch) => {
     try {
       // console.log('jjjjjjj', productId)
-      const { data } = await axios.delete(`/api/users/${id}/cart/${productId}`);
+      const { data } = await axios.delete(`/api/users/${orderId}/cart/${productId}`);
       console.log("inside removeCartItem thunk: ", data);
       dispatch(_removeCartProduct(data));
-      history.push(`/users/${id}/cart`)
+      //history.push(`/users/${id}/cart`)
     } catch (error) {
       console.log("error in REMOVE_CART_PRODUCT thunk", error);
     }
   };
 }
 
-export const updateProductQuantity = (id, productId, history) => {
+export const updateProductQuantity = (orderId, productId, newQuantity,history) => {
   return async (dispatch) => {
     try {
-      
-      const { data: updated } = await axios.put(`/api/users/${id}/cart/${productId}`)
+      let {data} = await axios.get(`/api/users/${orderId}/${productId}`)
+
+      data.orderQuantity = newQuantity;
+      console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP', data)
+      //const { data } = await axios.put(`/api/users/${orderId}/cart/${productId}`, {})
       
     } catch(err) {
       console.log("error in INCREASEPRODUCT QUANTITY thunk", err);
