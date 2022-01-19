@@ -13,8 +13,6 @@ class SingleOrder extends React.Component {
         this.props.match.params.id,
         this.props.match.params.orderId
       );
-
-      console.log("Inside Component did mount: ", this.props);
     } catch (err) {
       console.log("error in componentDidMount of SingleOrder component: ", err);
     }

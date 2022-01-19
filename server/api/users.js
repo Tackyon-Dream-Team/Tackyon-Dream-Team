@@ -161,7 +161,7 @@ router.delete(
           productId: req.params.productId,
         },
       });
-      console.log("------cartIIIItem----", cartItem);
+      // console.log("------cartIIIItem----", cartItem);
       // const product = cart[0].products[req.params.index] //await Product.findByPk(req.params.productId)
       // await cart.removeOrderProduct(product.id) //if removed we make it to the action
       res.json(order);

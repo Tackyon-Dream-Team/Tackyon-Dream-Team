@@ -12,7 +12,7 @@ export const getUsers = () => {
     try {
       const { data } = await axios.get("/api/users/all");
       dispatch(setUsers(data));
-      console.log("users data: ", data);
+      // console.log("users data: ", data);
     } catch (error) {
       console.log("get users thunk something wrong", error);
     }

@@ -2,7 +2,6 @@ const router = require("express").Router();
 const {
   models: { Product },
 } = require("../db");
-module.exports = router;
 
 router.get("/", async (req, res, next) => {
   try {
@@ -24,7 +23,10 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    res.json(await Product.create(req.body));
+    console.log("req.body:", req.body);
+    const newProduct = await Product.create(req.body);
+    console.log("newProduct", newProduct);
+    res.json(newProduct);
   } catch (err) {
     next(err);
   }
@@ -59,6 +61,7 @@ router.delete("/:id", async (req, res, next) => {
     const product = await Product.findByPk(req.params.id);
     if (product) {
       res.json(await product.destroy());
+      res.send(product);
     } else {
       res.sendStatus(404);
     }
@@ -66,3 +69,5 @@ router.delete("/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+module.exports = router;

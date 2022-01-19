@@ -55,7 +55,6 @@ class Navbar extends React.Component {
  * CONTAINER
  */
 const mapState = (state) => {
-  console.log("-----state.auth.id-----", state.auth);
   return {
     user: state.auth,
     isLoggedIn: !!state.auth.id,

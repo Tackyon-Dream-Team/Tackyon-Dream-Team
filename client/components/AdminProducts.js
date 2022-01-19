@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getProducts, removeProduct } from "../store/Products";
+import { Link } from "react-router-dom";
+
 class AdminProducts extends React.Component {
   constructor() {
     super();
@@ -34,7 +36,9 @@ class AdminProducts extends React.Component {
               <p>Category: {product.category}</p>
               <img src={product.imageUrl} className="SinglePicture" />
               <span>
-                <button>Edit</button>
+                <Link to={`/products/edit/${product.id}`}>
+                  <button>Edit</button>
+                </Link>
                 <button onClick={() => this.props.removeProduct(product.id)}>
                   Delete
                 </button>

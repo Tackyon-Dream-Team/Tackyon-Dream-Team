@@ -23,7 +23,9 @@ class NewProduct extends Component {
   }
   submitHandler(evt) {
     evt.preventDefault();
+    console.log("spread of state in submit: ", { ...this.state });
     this.props.createProduct({ ...this.state });
+    this.props.history.push(`/users/${this.props.user.id}/admin`);
   }
 
   render() {
@@ -45,7 +47,19 @@ class NewProduct extends Component {
         <label htmlFor="quantity">Quantity</label>
         <input name="quantity" onChange={changeHandler} value={quantity} />
         <label htmlFor="category">Category</label>
-        <input name="category" onChange={changeHandler} value={category} />
+        {/* <input name="category" onChange={changeHandler} value={category} /> */}
+        <select name="category" onChange={changeHandler} value={category}>
+          <option value="category">Electronics</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
         <button type="submit">Submit</button>
       </form>
     );
@@ -55,4 +69,11 @@ class NewProduct extends Component {
 const mapDispatch = (dispatch, { history }) => ({
   createProduct: (product) => dispatch(createProduct(product, history)),
 });
-export default connect(null, mapDispatch)(NewProduct);
+
+const mapState = (state) => {
+  return {
+    user: state.auth,
+  };
+};
+
+export default connect(mapState, mapDispatch)(NewProduct);

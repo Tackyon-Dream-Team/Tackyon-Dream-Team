@@ -17,7 +17,7 @@ class Users extends React.Component {
 
   render() {
     const users = this.props.users || [];
-    console.log("users ", users);
+    // console.log("users ", users);
     return (
       <div>
         <h1>All Active Users:</h1>

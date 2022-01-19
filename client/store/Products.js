@@ -9,9 +9,9 @@ const setProducts = (products) => ({
   products,
 });
 
-const _removeProduct = (product) => ({
+const _removeProduct = (productId) => ({
   type: REMOVE_PRODUCT,
-  product,
+  productId,
 });
 
 const _createProduct = (product) => ({
@@ -30,13 +30,23 @@ export const getProducts = () => {
   };
 };
 
+// export const removeProduct = (productId) => {
+//   return async (dispatch) => {
+//     try {
+//       const { data } = await axios.delete(`/api/products/${productId}`);
+//       console.log("removeProduct Data: ", data);
+//       dispatch(_removeProduct(data));
+//     } catch (error) {
+//       console.log("error in removeProduct thunk: ", error);
+//     }
+//   };
+// };
+
 export const removeProduct = (productId) => {
   return async (dispatch) => {
     try {
-      const { data: product } = await axios.delete(
-        `/api/products/${productId}`
-      );
-      dispatch(_removeProduct(product));
+      await axios.delete(`/api/products/${productId}`);
+      dispatch(_removeProduct(productId));
     } catch (error) {
       console.log("error in removeProduct thunk: ", error);
     }
@@ -46,8 +56,9 @@ export const removeProduct = (productId) => {
 export const createProduct = (product) => {
   return async (dispatch) => {
     try {
-      const { data: created } = await axios.post("api/products", product);
-      dispatch(_createProduct(created));
+      const { data } = await axios.post("/api/products", product);
+      console.log("!!!!!!!!", data);
+      dispatch(_createProduct(data));
     } catch (error) {
       console.log("error in createProduct thunk", error);
     }
@@ -61,9 +72,9 @@ export default function ProductsReducer(state = intialState, action) {
     case SET_PRODUCTS:
       return action.products;
     case REMOVE_PRODUCT:
-      return state.filter(
-        (product) => product.productId !== action.product.productId
-      );
+      return state.filter((product) => {
+        return product.id !== action.productId;
+      });
     case CREATE_PRODUCT:
       return [...state, action.product];
     default:
