@@ -59,8 +59,8 @@ export const updateProductQuantity = (orderId, productId, newQuantity,history) =
 
       data.orderQuantity = newQuantity;
       console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP', data)
-      //const { data } = await axios.put(`/api/users/${orderId}/cart/${productId}`, {})
-      
+      const updatedCartProduct = await axios.put(`/api/users/${orderId}/cart/${productId}`, data)
+      console.log('UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU',updatedCartProduct)
     } catch(err) {
       console.log("error in INCREASEPRODUCT QUANTITY thunk", err);
     }
