@@ -57,6 +57,7 @@ class Cart extends React.Component {
 
   render() {
     const cart = this.props.cart || [];
+    const user = this.props.user || { name: "", id: 0 };
     console.log("CARTTTTTTTTTTTTTTTTTTTTTT ", cart);
     if (cart.length === 0) {
       return (
@@ -124,7 +125,9 @@ class Cart extends React.Component {
               }
             </div>
           </div>
-          <button>Proceed to checkout</button>
+          <button onClick={() => this.props.history.push(`/users/${user.id}/cart/checkout`)}>
+              Proceed to checkout
+            </button>
         </>
       );
     }
@@ -134,6 +137,7 @@ class Cart extends React.Component {
 const mapState = (state) => {
   console.log('<<<<<state>>>>', state)
   return {
+    user: state.auth,
     cart: state.Cart,
   };
 };

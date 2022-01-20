@@ -11,7 +11,6 @@ class CheckoutOrder extends React.Component {
     try {
       this.props.loadSingleOrder(
         this.props.match.params.id,
-        this.props.match.params.orderId
       );
     } catch (err) {
       console.log(
@@ -22,31 +21,61 @@ class CheckoutOrder extends React.Component {
   }
 
   render() {
-    const order = this.props.checkout;
-
-    if (order.length === 0) {
+    const cart = this.props.cart;
+    console.log('ooooooooo', cart)
+    if (cart.length === 0) {
       return <div>Loading...</div>;
     } else {
-      const products = order[0].products;
+      // const products = order[0].products;
       return (
-        <div id="single-Order">
-          <h1>Checkout</h1>
-          <h3>Order Placed: {order.updatedAt}</h3>
-          {products.map((product) => {
+        <>
+          <div id="single-Order">
+            <h1>Checkout</h1>
+            {cart.map((product) => {
+            console.log('OOOOOOOOOOOOOOoooooooooooooooooooooooooo', product.product)
+            console.log('-----cartProduct------', product)
+            const {name, imageUrl, price} = product.product;
             return (
-              <div key={product.id}>
-                <h1>{product.name}</h1>
+              <div key={product.productId}>
+                <h1>{name}</h1>
                 <h3>
-                  {" "}
-                  Price: ${Math.floor(product.price / 100)}.
-                  {product.price % 100}
+                  ${Math.floor(price / 100)}.{price % 100}
                 </h3>
-                <h3>{product.quantity}</h3>
-                <img src={product.imageUrl} className="SinglePicture" />
+                <div>{product.orderQuantity}</div>
+                <img src={imageUrl} className="SinglePicture" />
               </div>
             );
           })}
-        </div>
+            {/* {order.map((product) => {
+              const {name, imageUrl, price} = product.product;
+
+              return (
+                <div key={product.productId}>
+                  <h1>{product.name}</h1>
+                  <h3>
+                    {" "}
+                    Price: ${Math.floor(product.price / 100)}.
+                    {product.price % 100}
+                  </h3>
+                  <h3>{product.quantity}</h3>
+                  <img src={product.imageUrl} className="SinglePicture" />
+                </div>
+              );
+            })} */}
+          </div>
+          <div id="Order-summary">
+          <div id="total">
+            Subtotal ({ cart.map(product => product.orderQuantity)
+                .reduce((acum, currVal) => acum + currVal)} item(s)): $
+              {
+                cart.map(product => product.product.price * product.orderQuantity)
+                .reduce((acum, currVal) => acum + currVal)/100
+                
+              }
+            </div>
+            <button>checkout</button>
+          </div>
+        </>
       );
     }
   }
@@ -55,7 +84,7 @@ class CheckoutOrder extends React.Component {
 const mapState = (state) => {
   console.log("====STATE====", state);
   return {
-    checkout: state.singleOrder,
+    cart: state.singleOrder,
   };
 };
 
