@@ -30,7 +30,7 @@ export const getCart = (id) => {
   return async (dispatch) => {
     try {
       const { data: orderProducts } = await axios.get(`/api/users/${id}/cartItems`);
-      console.log("indside cart thunk: ", orderProducts);
+      console.log("GET CART THUNK: orderProducts", orderProducts);
       dispatch(setCart(orderProducts));
     } catch (error) {
       console.log("error in cart thunk", error);
@@ -38,7 +38,7 @@ export const getCart = (id) => {
   };
 };
 
-export const removeCartProduct = (orderId, productId, history ) => {
+export const removeCartProduct = (orderId, productId) => {
   return async (dispatch) => {
     try {
       // console.log('jjjjjjj', productId)
@@ -52,7 +52,7 @@ export const removeCartProduct = (orderId, productId, history ) => {
   };
 };
 
-export const updateProductQuantity = (orderId, productId, newQuantity, history) => {
+export const updateProductQuantity = (orderId, productId, newQuantity) => {
   return async (dispatch) => {
     try {
       let {data} = await axios.get(`/api/users/${orderId}/${productId}`)

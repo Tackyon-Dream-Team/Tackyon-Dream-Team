@@ -62,48 +62,57 @@ async function seed() {
   
   const incompleteOrder = await Promise.all([
     Order.create({activeOrder: 'Incomplete'}),
-    ])
+    Order.create({activeOrder: 'Incomplete'}),
+    Order.create({activeOrder: 'Incomplete'}),
+    Order.create({activeOrder: 'Incomplete'}),
+    Order.create({activeOrder: 'Incomplete'}),
+  ])
   
   const products = await Promise.all([
     Product.create({
       name: "Rain Jacket",
       description: "a jacket that gives you the power to stay dry",
       price: 4999,
-      quantity: 10,
+      quantity: 20,
     }),
     Product.create({
       name: "Snow Boots",
       description: "keeps the feet at exactly 70°F at all times",
       price: 11999,
-      quantity: 5
+      quantity: 15
     }),
     Product.create({
       name: "Tent",
       description: "hide yourself from ET when out in the wild",
       price: 59999,
-      quantity: 5,
+      quantity: 10,
       category: "Sporting Equipment",
     }),
     Product.create({
       name: "Phone",
       description: "call mama bear with this amazing product",
       price: 99999,
-      quantity: 1,
+      quantity: 30,
       category: "Electronics",
     }),
     Product.create({
-      name: "Sun Hoodie",
-      description: "a hoodie that keeps you pale",
+      name: "Shovel",
+      description: "lowest tier of snow-removal tools",
       price: 1529,
-      quantity: 20,
+      quantity: 25,
     }),
   ]);
 
   //user 1 has previous orders 1, 2
+  await completedOrders[2].setUser(users[0])
+  await completedOrders[3].setUser(users[0])
   await completedOrders[0].setUser(users[0])
   await completedOrders[1].setUser(users[0])
   await incompleteOrder[0].setUser(users[0])
-  
+  await incompleteOrder[1].setUser(users[1])
+  await incompleteOrder[2].setUser(users[2])
+  await incompleteOrder[3].setUser(users[3])
+  await incompleteOrder[4].setUser(users[4])
   //previous order 1 has products 3, 4
   await incompleteOrder[0].addProduct(products[2])
   await incompleteOrder[0].addProduct(products[3])

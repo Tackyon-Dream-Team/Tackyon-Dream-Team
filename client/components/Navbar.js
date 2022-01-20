@@ -42,6 +42,9 @@ class Navbar extends React.Component {
             {/* The navbar will show these links before you log in */}
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
+            <button onClick={() => {
+              window.alert('Please Log In or Sign Up to view your cart')
+            }}>View Cart</button>
             {
               //<button onClick={() => FINISH THIS VIEW CART BUTTON FOR GUEST USER
             }

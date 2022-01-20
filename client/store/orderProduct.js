@@ -48,6 +48,7 @@ export const addToCart = (userId, productId, quantity, price) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/api/users/${userId}/cart`)
+      console.log('DATA FROM ADDTOCART', data)
       const findOrCreate = await axios.put(`/api/orderProducts/${data.id}/${productId}`, {orderId: data.id, productId: productId, orderQuantity: quantity, orderPrice: price})
       //if findOrCreate fails it will throw an error and skip this part of the code
       dispatch(decreaseStock(productId, quantity))
