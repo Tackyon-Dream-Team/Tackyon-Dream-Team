@@ -32,7 +32,9 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
+    console.log("before running api route");
     const product = await Product.findByPk(req.params.id);
+    console.log("inside api route /products/id", product);
     if (product) {
       res.json(await product.update(req.body));
     } else {

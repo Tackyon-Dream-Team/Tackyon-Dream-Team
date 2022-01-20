@@ -30,10 +30,13 @@ export const fetchSingleProduct = (id) => {
   };
 };
 
-export const updateProduct = (product) => {
+export const updateProduct = (productId, newProduct) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/products/${product.id}`);
+      const i = productId;
+      console.log("productid and newProduct", productId, newProduct);
+      const { data } = await axios.put(`/api/products/${i}`, newProduct);
+      console.log("inside updateproduct thunk data:", data);
       dispatch(_updateProduct(data));
     } catch (error) {
       console.log("error in update product thunk ", error);
@@ -64,9 +67,7 @@ export default function singleProductReducer(state = {}, action) {
     case SET_SINGLE_PRODUCT:
       return action.product;
     case UPDATE_PRODUCT:
-      return state.map((product) =>
-        product.id === action.product.id ? action.product : product
-      );
+      return action.product;
     default:
       return state;
   }

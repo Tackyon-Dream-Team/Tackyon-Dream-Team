@@ -6,6 +6,13 @@ class EditProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // name: "name",
+      // description: "description",
+      // imageUrl:
+      //   "https://www.minethatcraft.com/wp-content/uploads/2018/12/Gdfgdg-3D.png",
+      // price: "1234",
+      // quantity: "1",
+      // category: "None",
       name: "",
       description: "",
       imageUrl: "",
@@ -17,6 +24,23 @@ class EditProduct extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    try {
+      const { name, description, imageUrl, price, quantity, category } =
+        this.props.singleProduct;
+      this.setState({
+        name,
+        description,
+        imageUrl,
+        price,
+        quantity,
+        category,
+      });
+    } catch (error) {
+      console.log("error in component did mount", error);
+    }
+  }
+
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value,
@@ -25,66 +49,59 @@ class EditProduct extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.props.updateProduct({ ...this.props.product, ...this.state });
+    this.props.updateProduct(this.props.singleProduct.id, { ...this.state });
   }
 
   render() {
+    const product = this.props.singleProduct || {
+      name: "",
+      description: "",
+      imageUrl: "",
+      price: 0,
+      quantity: 0,
+      category: "",
+    };
+    console.log("in edit product", product);
     const { name, description, imageUrl, price, quantity, category } =
       this.state;
-    // console.log("!!!!!!state", this.state);
     const { handleSubmit, handleChange } = this;
-    if (!this.state) {
-      return <div>Loading...</div>;
-    }
+
     return (
       <div>
         <form onSubmit={handleSubmit} className="Headers">
           <label htmlFor="name">Name</label>
-          <br />
           <input name="name" onChange={handleChange} value={name} />
-          <br />
           <label htmlFor="description">Description</label>
-          <br />
           <input
             name="description"
             onChange={handleChange}
             value={description}
           />
-          <br />
           <label htmlFor="imageUrl">Product Image Link</label>
-          <br />
           <input name="imageUrl" onChange={handleChange} value={imageUrl} />
-          <br />
           <label htmlFor="price">Price in pennies</label>
-          <br />
           <input name="price" onChange={handleChange} value={price} />
-          <br />
           <label htmlFor="quantity">Quantity</label>
-          <br />
           <input name="quantity" onChange={handleChange} value={quantity} />
-          <br />
           <label htmlFor="category">Category</label>
-          <br />
           <input name="category" onChange={handleChange} value={category} />
-          <br />
-          <br />
           <button type="submit" className="submit">
             Submit
           </button>
-          <br />
         </form>
       </div>
     );
   }
 }
 
-const mapState = ({ product }) => ({
-  product,
+const mapState = (state) => ({
+  singleProduct: state.singleProduct,
 });
 
-const mapDispatch = (dispatch, { history }) => ({
+const mapDispatch = (dispatch) => ({
   fetchSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
-  updateProduct: (product) => dispatch(updateProduct(product, history)),
+  updateProduct: (productId, newProduct) =>
+    dispatch(updateProduct(productId, newProduct)),
 });
 
 export default connect(mapState, mapDispatch)(EditProduct);
