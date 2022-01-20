@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const { requireToken, isAdmin } = require("./gatekeeper");
+
 const {
   models: { Product },
 } = require("../db");
@@ -21,7 +23,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", requireToken, isAdmin, async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body);
     res.json(newProduct);
@@ -30,7 +32,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", requireToken, isAdmin, async (req, res, next) => {
   try {
     console.log("before running api route");
     const product = await Product.findByPk(req.params.id);
@@ -56,7 +58,7 @@ router.put("/decrement/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", requireToken, isAdmin, async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
     if (product) {
