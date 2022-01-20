@@ -8,7 +8,7 @@ class Cart extends React.Component {
     this.state = this.props.cart || []
     
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    //this.handleSubmit = this.handleSubmit.bind(this);
 
   }
 
@@ -17,7 +17,7 @@ class Cart extends React.Component {
     // console.log('event.target.value', event.target.value)
     // console.log('handlechgange product', product)
     // this.setState([...this.cart, orderQuantity: {orderQuantity: event.target.value}])
-    const tempState = this.state
+    //const tempState = this.state
     // console.log('{{{{{{{{{{}}}}}}}}}}}}}}}', tempState)
     // const result = tempState.map(cartItem => {
     //     if(cartItem.productId === product.productId){
@@ -37,10 +37,10 @@ class Cart extends React.Component {
     // this.setState({value: event.target.value});
   }
 
-  handleSubmit(event) {
-    alert('Your updated quantity is: ' + this.state.value);
-    event.preventDefault();
-  }
+  // handleSubmit(event) {
+  //   alert('Your updated quantity is: ' + this.state.value);
+  //   event.preventDefault();
+  // }
 
   componentDidMount() {
     try {
@@ -55,7 +55,7 @@ class Cart extends React.Component {
 
   render() {
     const cart = this.props.cart || [];
-    console.log("render cart ", cart);
+    console.log("CARTTTTTTTTTTTTTTTTTTTTTT ", cart);
     if (cart.length === 0) {
       return (
         <div>
@@ -68,15 +68,16 @@ class Cart extends React.Component {
       );
     } else {
       // const products = cart.products;
-      const { orderId } = cart
+      //const { orderId } = cart
       // console.log("!!!!cartItems!!!!", products);
       return (
       <>  
         <h1>Your Shopping Cart</h1>
         <div id="cartItems">
           {cart.map((product) => {
-            const {name, imageUrl, price} = product.product;
+            console.log('OOOOOOOOOOOOOOoooooooooooooooooooooooooo', product.product)
             console.log('-----cartProduct------', product)
+            const {name, imageUrl, price} = product.product;
             return (
               <div key={product.productId}>
                 <h1>{name}</h1>
