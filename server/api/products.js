@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const { requireToken, isAdmin } = require("./gatekeeper");
+
 const {
   models: { Product },
 } = require("../db");
@@ -23,9 +25,7 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    console.log("req.body:", req.body);
     const newProduct = await Product.create(req.body);
-    console.log("newProduct", newProduct);
     res.json(newProduct);
   } catch (err) {
     next(err);
@@ -34,7 +34,9 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
+    console.log("before running api route");
     const product = await Product.findByPk(req.params.id);
+    console.log("inside api route /products/id", product);
     if (product) {
       res.json(await product.update(req.body));
     } else {

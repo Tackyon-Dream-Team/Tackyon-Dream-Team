@@ -24,7 +24,7 @@ class SingleOrder extends React.Component {
       return <div>Loading...</div>;
     } else {
       const products = order[0].products;
-      console.log("!!!!!!!!", products);
+      // console.log("!!!!!!!!", products);
       return (
         <div id="single-Order">
           {products.map((product) => {

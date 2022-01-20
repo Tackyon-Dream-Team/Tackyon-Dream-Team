@@ -6,55 +6,49 @@ class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      orderQuantity: 0
+      orderQuantity: []
     }
     
     this.handleChange = this.handleChange.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
   }
 
 
-  handleChange(product, event) {
-    // console.log('event.target.value', event.target.value)
-    // console.log('handlechgange product', product)
-    // this.setState([...this.cart, orderQuantity: {orderQuantity: event.target.value}])
-    //const tempState = this.state
-    // console.log('{{{{{{{{{{}}}}}}}}}}}}}}}', tempState)
-    // const result = tempState.map(cartItem => {
-    //     if(cartItem.productId === product.productId){
-    //       cartItem.orderQuantity = Number(event.target.value)
-    //       return cartItem
-    //     }
-    //     return cartItem
-    // })
-    this.setState({orderQuantity: Number(event.target.value)})
-    this.props.updateProductQuantity(product.orderId, product.productId, Number(event.target.value))
-    
-    //cartItem.productId === product.productId ? cartItem.orderQuantity = Number(event.target.value) : cartItem)
-    // console.log('IS IT 77777777777', result)
-    // this.setState(result)
-    
-    // if(Number(event.target.value) > )
-    // this.setState({value: event.target.value});
+  handleChange(event) {
+    let tempArr = [...this.state.orderQuantity]
+    tempArr[Number(event.target.name)] = Number(event.target.value)
+    console.log('**handleChange** STATE.ORDERQUANTITY IS BECOMING: ', tempArr)
+    this.setState({orderQuantity: tempArr})
   }
 
   // handleSubmit(event) {
-  //   alert('Your updated quantity is: ' + this.state.value);
   //   event.preventDefault();
+  //   this.props.updateProductQuantity(product.orderId, product.productId, Number(event.target.value))
   // }
-
-  componentDidMount() {
+  
+  handleSubmit(orderId, productId, newQuantity) {
+    return event => {
+      event.preventDefault()
+      console.log('**handleSubmit** SENDING OFF UPDATE PRODUCT QUANTITY WITH: ', orderId, productId, newQuantity)
+      this.props.updateProductQuantity(orderId, productId, newQuantity)
+    }
+  }
+  
+  async componentDidMount() {
     try {
-      this.props.loadCart(this.props.match.params.id);
-      console.log("cart Component did mount: ", this.props);
+      await this.props.loadCart(this.props.match.params.id);
+      let arrQuantities = []
+      this.props.cart.forEach(element => arrQuantities.push(element.orderQuantity))
+      console.log('**componentDidMount** STATE.ORDERQUANTITY IS BECOMING: ', arrQuantities)
+      this.setState({orderQuantity: arrQuantities})
     } catch (err) {
       console.log("error in cart componentDidMount: ", err);
     }
   }
-
   
-
+  //cart should re-render automatically on updates to store, but state needs to be updated as well
+  
   render() {
     const cart = this.props.cart || [];
     const user = this.props.user || { name: "", id: 0 };
@@ -65,7 +59,7 @@ class Cart extends React.Component {
           <h1>Your Shopping Cart is Empty</h1>
           <em>
             If you cannot place an item in your cart, your browser might not
-            support cookies. Learn more
+            support cookies. 
           </em>
         </div>
       );
@@ -77,21 +71,20 @@ class Cart extends React.Component {
       <>  
         <h1>Your Shopping Cart</h1>
         <div id="cartItems">
-          {cart.map((product) => {
-            console.log('OOOOOOOOOOOOOOoooooooooooooooooooooooooo', product.product)
-            console.log('-----cartProduct------', product)
-            const {name, imageUrl, price} = product.product;
+          {cart.map((orderProduct, index) => {
+            console.log('SHOPPING CART PRODUCT =>', orderProduct.product)
+            const {name, imageUrl, price, id} = orderProduct.product
             return (
-              <div key={product.productId}>
+              <div key={orderProduct.productId}>
                 <h1>{name}</h1>
                 <h3>
                   ${Math.floor(price / 100)}.{price % 100}
                 </h3>
                 <div className="edit-cart">
-                  <div>{product.orderQuantity}</div>
-                  <form id="update-cart-Quantity" onSubmit={this.handleSubmit}>
+                  <div>Quantity in cart:</div>
+                  <form id="update-cart-Quantity" onSubmit={this.handleSubmit(orderProduct.orderId, id, this.state.orderQuantity[index])}>
                     <label>Update Product Quantity:</label>
-                    <select value={this.state.orderQuantity} onChange={(event) => this.handleChange(product, event)}>
+                    <select name={String(index)} value={String(this.state.orderQuantity[index])} onChange={this.handleChange}>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -103,17 +96,16 @@ class Cart extends React.Component {
                       <option value="9">9</option>
                       <option value="10">10</option>
                     </select>
-                    <input type="submit" />
+                    <button type='submit'>Update Quantity</button>
                   </form>
-                  <form onSubmit={(ev) => ev.preventDefault()}>
-                    <button className="remove-bttn" onClick={() => this.props.removeCartProduct(product.orderId, product.productId)}>remove</button>
-                  </form>
+                  <button className="remove-bttn" onClick={() => this.props.removeCartProduct(orderProduct.orderId, orderProduct.productId)}>Remove All From Cart</button>
                 </div>
                 <img src={imageUrl} className="SinglePicture" />
               </div>
             );
           })}
         </div>
+        
         <div id="Order-summary">
           <div id="total">
             Subtotal ({ cart.map(product => product.orderQuantity)
@@ -144,10 +136,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch, {history}) => {
   return {
-    loadCart: (id) => dispatch(getCart(id)),
-    removeCartProduct: (id, productId) => dispatch(removeCartProduct(id, productId, history)),
-    updateProductQuantity: (id, productId, newQuantity) => dispatch(updateProductQuantity(id, productId, newQuantity, history))
+    loadCart: (userId) => dispatch(getCart(userId)),
+    removeCartProduct: (orderId, productId) => dispatch(removeCartProduct(orderId, productId)),
+    updateProductQuantity: (orderId, productId, newQuantity) => dispatch(updateProductQuantity(orderId, productId, newQuantity))
   };
 };
 
 export default connect(mapState, mapDispatch)(Cart);
+//line 81 - <form id="update-cart-Quantity" onSubmit={(event, orderProduct.orderId, id, this.state.orderQuantity[index]) => this.handleSubmit(event, orderProduct.orderId, id, this.state.orderQuantity[index])}>
