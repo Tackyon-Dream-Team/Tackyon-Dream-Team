@@ -5,10 +5,12 @@ import { getCart, removeCartProduct, updateProductQuantity } from "../store/cart
 class Cart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.props.cart || []
+    this.state = {
+      orderQuantity: 0
+    }
     
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    //this.handleSubmit = this.handleSubmit.bind(this);
 
   }
 
@@ -17,7 +19,7 @@ class Cart extends React.Component {
     // console.log('event.target.value', event.target.value)
     // console.log('handlechgange product', product)
     // this.setState([...this.cart, orderQuantity: {orderQuantity: event.target.value}])
-    const tempState = this.state
+    //const tempState = this.state
     // console.log('{{{{{{{{{{}}}}}}}}}}}}}}}', tempState)
     // const result = tempState.map(cartItem => {
     //     if(cartItem.productId === product.productId){
@@ -26,7 +28,7 @@ class Cart extends React.Component {
     //     }
     //     return cartItem
     // })
-    
+    this.setState({orderQuantity: Number(event.target.value)})
     this.props.updateProductQuantity(product.orderId, product.productId, Number(event.target.value))
     
     //cartItem.productId === product.productId ? cartItem.orderQuantity = Number(event.target.value) : cartItem)
@@ -37,10 +39,10 @@ class Cart extends React.Component {
     // this.setState({value: event.target.value});
   }
 
-  handleSubmit(event) {
-    alert('Your updated quantity is: ' + this.state.value);
-    event.preventDefault();
-  }
+  // handleSubmit(event) {
+  //   alert('Your updated quantity is: ' + this.state.value);
+  //   event.preventDefault();
+  // }
 
   componentDidMount() {
     try {
@@ -55,7 +57,7 @@ class Cart extends React.Component {
 
   render() {
     const cart = this.props.cart || [];
-    console.log("render cart ", cart);
+    console.log("CARTTTTTTTTTTTTTTTTTTTTTT ", cart);
     if (cart.length === 0) {
       return (
         <div>
@@ -68,15 +70,16 @@ class Cart extends React.Component {
       );
     } else {
       // const products = cart.products;
-      const { orderId } = cart
+      //const { orderId } = cart
       // console.log("!!!!cartItems!!!!", products);
       return (
       <>  
         <h1>Your Shopping Cart</h1>
         <div id="cartItems">
           {cart.map((product) => {
-            const {name, imageUrl, price} = product.product;
+            console.log('OOOOOOOOOOOOOOoooooooooooooooooooooooooo', product.product)
             console.log('-----cartProduct------', product)
+            const {name, imageUrl, price} = product.product;
             return (
               <div key={product.productId}>
                 <h1>{name}</h1>
@@ -86,8 +89,8 @@ class Cart extends React.Component {
                 <div className="edit-cart">
                   <div>{product.orderQuantity}</div>
                   <form id="update-cart-Quantity" onSubmit={this.handleSubmit}>
-                    <label>Choose a cart Item:</label>
-                    <select value={product.orderQuantity} onChange={(event) => this.handleChange(product, event)}>
+                    <label>Update Product Quantity:</label>
+                    <select value={this.state.orderQuantity} onChange={(event) => this.handleChange(product, event)}>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
