@@ -1,10 +1,18 @@
 import axios from "axios";
 
 const SET_SINGLE_PRODUCT = "SET_SINGLE_PRODUCT";
+const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 
 export const setSingleProduct = (product) => {
   return {
     type: SET_SINGLE_PRODUCT,
+    product,
+  };
+};
+
+export const _updateProduct = (product) => {
+  return {
+    type: UPDATE_PRODUCT,
     product,
   };
 };
@@ -18,6 +26,20 @@ export const fetchSingleProduct = (id) => {
     } catch (err) {
       //console.log('Error in fetchSingleProduct: ', err, id)
       console.log("Error in fetchSingleProduct: ", id);
+    }
+  };
+};
+
+export const updateProduct = (productId, newProduct) => {
+  return async (dispatch) => {
+    try {
+      const i = productId;
+      console.log("productid and newProduct", productId, newProduct);
+      const { data } = await axios.put(`/api/products/${i}`, newProduct);
+      console.log("inside updateproduct thunk data:", data);
+      dispatch(_updateProduct(data));
+    } catch (error) {
+      console.log("error in update product thunk ", error);
     }
   };
 };
@@ -43,6 +65,8 @@ export const decreaseStock = (productId, decrement) => {
 export default function singleProductReducer(state = {}, action) {
   switch (action.type) {
     case SET_SINGLE_PRODUCT:
+      return action.product;
+    case UPDATE_PRODUCT:
       return action.product;
     default:
       return state;
