@@ -22,7 +22,8 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", requireToken, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
+  console.log('Post request to /api/orders')
   try {
     res.json(await Order.create(req.body));
   } catch (err) {

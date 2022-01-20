@@ -7,6 +7,7 @@ import {authenticate, authenticateSignUp} from '../store'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
+  console.log('WHICH FORM', name)
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -107,6 +108,9 @@ const mapDispatch = (dispatch) => {
         const lastName = evt.target.lastName.value || ''
         const email = evt.target.email.value || ''
         const imageUrl = evt.target.imageUrl.value || 'https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png'
+        
+        console.log('SIGNUP INFORMATION FROM MAPDISPATCH', username, password, firstName, lastName, email, imageUrl)
+        
         dispatch(authenticateSignUp(username, password, firstName, lastName, email, imageUrl))
       }
     }

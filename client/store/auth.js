@@ -1,6 +1,6 @@
 import axios from "axios";
 import history from "../history";
-import { addToCart } from "./orderProduct";
+import { addToCart } from './orderProduct'
 const TOKEN = "token";
 
 /**
@@ -26,16 +26,16 @@ export const me = () => async (dispatch) => {
         authorization: token,
       },
     });
-    //console.log('=============LOOK HERE===========', res.data.id)
+    console.log('=============LOOK HERE===========', res)
     //const { data } = await axios.get(`api/users/${res.data.id}/cart`)
     //console.log('=========ID==========', data.id)
-    let localCart = window.localStorage.getItem("guestCart");
+    let localCart = window.localStorage.getItem('guestCart')
     if (localCart) {
-      localCart = JSON.parse(localCart);
+      localCart = JSON.parse(localCart)
       await localCart.forEach((op) => {
-        // console.log('WHOOOPEEE OVER HERE', dispatch(addToCart(res.data.id, op.productId, op.orderQuantity, op.orderPrice)))
-      });
-      window.localStorage.removeItem("guestCart");
+        console.log('WHOOOPEEE OVER HERE', dispatch(addToCart(res.data.id, op.productId, op.orderQuantity, op.orderPrice)))
+      })
+      window.localStorage.removeItem('guestCart')
     }
     history.push("/");
     return dispatch(setAuth(res.data));
@@ -53,24 +53,28 @@ export const authenticate =
     }
   };
 
-export const authenticateSignUp =
-  (username, password, firstName, lastName, email, imageUrl) =>
+export const authenticateSignUp = (username, password, firstName, lastName, email, imageUrl) =>
   async (dispatch) => {
     try {
-      const res = await axios.post(`/auth/signup`, {
-        username,
-        password,
-        firstName,
-        lastName,
-        email,
-        imageUrl,
+      const res = await axios.post(`/auth/signup`, {username, password, firstName, lastName, email, imageUrl})
+      console.log('AUTHENTICATE SIGNUP', res)
+      //const cart = await axios.post(`/`)
+      
+      const whoAmI = await axios.get("/auth/me", {
+        headers: {
+          authorization: res.data.token,
+        },
       });
-      window.localStorage.setItem(TOKEN, res.data.token);
-      dispatch(me());
-    } catch (err) {
-      return dispatch(setAuth({ error: err }));
+      console.log('After WHOAMI')
+      const createCart = await axios.post(`/api/orders/`, {activeOrder: 'Incomplete', userId: whoAmI.data.id})
+      console.log('AFTER CREATECART', createCart)
+      window.localStorage.setItem(TOKEN, res.data.token)
+      dispatch(me())
+    } catch(err) {
+      return dispatch(setAuth({error: err}))
     }
-  };
+  }
+
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
