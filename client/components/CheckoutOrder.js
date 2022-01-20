@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getCart } from "../store/cart";
-import { getSingleOrder } from "../store/singleOrder";
+import { getSingleOrder, updateCartStatus } from "../store/singleOrder";
 
 class CheckoutOrder extends React.Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class CheckoutOrder extends React.Component {
       this.props.loadSingleOrder(
         this.props.match.params.id,
       );
+      // this.props.loadCartDetails(this.props.match.params.id)
     } catch (err) {
       console.log(
         "error in componentDidMount of CheckoutOrder component: ",
@@ -24,8 +25,7 @@ class CheckoutOrder extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.loadCartDetails(this.props.match.params.id)
-
+    this.props.updateCartStatus(this.props.user.id, this.props.cart[0].orderId)
     console.log('handleeeeeeeeeeeeee', this.props)
     const user = this.props.user
     this.props.history.push(`/users/${user.id}/orders`)
@@ -34,7 +34,7 @@ class CheckoutOrder extends React.Component {
   }
 
   render() {
-    const cart = this.props.cart;
+    const cart = this.props.cart || [];
     const user = this.props.user || {name: '', id: 0}
     console.log('ooooooooo', cart)
     if (cart.length === 0) {
@@ -107,13 +107,14 @@ const mapState = (state) => {
   return {
     user: state.auth,
     cart: state.singleOrder,
+    
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     loadSingleOrder: (id, orderId) => dispatch(getSingleOrder(id, orderId)),
-    loadCartDetails: (id) => dispatch(getCart(id))
+    updateCartStatus: (id, orderId) => dispatch(updateCartStatus(id, orderId))
   };
 };
 

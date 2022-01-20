@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const SET_SINGLE_ORDER = "SET_SINGLE_ORDER";
-const SET_CART_DETAILS = "SET_CART_DETAILS"
+const UPDATE_CART_STATUS ='UPDATE_CART_STATUS'
 
 export const setSingleOrder = (order) => {
   return {
@@ -10,10 +10,10 @@ export const setSingleOrder = (order) => {
   };
 };
 
-export const setCartDetails = (cartDetails) => {
+export const _updateCartStatus = (cart) => {
   return {
-    type: SET_CART_DETAILS,
-    cartDetails,
+    type: UPDATE_CART_STATUS,
+    cart,
   };
 };
 
@@ -29,14 +29,18 @@ export const getSingleOrder = (id, orderId) => {
   };
 };
 
-export const getcart = (id) => {
+export const updateCartStatus = (id, orderId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${id}/cart`);
-      console.log("inside getcart thunk: ", data);
-      dispatch(setCartDetails(data));
+      const { data } = await axios.get(`/api/users/${id}/orders/${orderId}`);
+      console.log("inside UPDATE STATUS thunk: ", data);
+      
+      data.activeOrder = 'Completed'
+      const updatedCartStatus = await axios.put(`/api/users/${id}/orders/${orderId}`, data)
+      console.log("OUR NEXT LOG", updatedCartStatus)
+      dispatch(_updateCartStatus(updatedCartStatus));
     } catch (error) {
-      console.log("error in singleOrder", error);
+      console.log("error in UPDATE CART STATUS", error);
     }
   };
 };
@@ -45,8 +49,8 @@ export default function singleOrderReducer(state = [], action) {
   switch (action.type) {
     case SET_SINGLE_ORDER:
       return action.order;
-    case SET_CART_DETAILS:
-      return action.cartDetails;
+    case UPDATE_CART_STATUS:
+      return action.cart;
     default:
       return state;
   }

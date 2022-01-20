@@ -221,3 +221,16 @@ router.get('/:orderId/:productId', async(req, res, next) => {
         next(err)
     }
 })
+
+//For ACTUALLY changing the field for acive
+router.put('/:userId/orders/:orderId', async (req, res, next) => {
+  try {
+    const editCartItem = await Order.findByPk(req.params.orderId)
+    
+    console.log('____________CART ITEM IN EDIT ________________', editCartItem)
+    
+    res.json(await editCartItem.update(req.body))
+  } catch(err) {
+    next(err)
+  }
+});
