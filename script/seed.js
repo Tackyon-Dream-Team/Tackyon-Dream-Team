@@ -73,33 +73,33 @@ async function seed() {
       name: "Rain Jacket",
       description: "a jacket that gives you the power to stay dry",
       price: 4999,
-      quantity: 10,
+      quantity: 20,
     }),
     Product.create({
       name: "Snow Boots",
       description: "keeps the feet at exactly 70°F at all times",
       price: 11999,
-      quantity: 5
+      quantity: 15
     }),
     Product.create({
       name: "Tent",
       description: "hide yourself from ET when out in the wild",
       price: 59999,
-      quantity: 5,
+      quantity: 10,
       category: "Sporting Equipment",
     }),
     Product.create({
       name: "Phone",
       description: "call mama bear with this amazing product",
       price: 99999,
-      quantity: 3,
+      quantity: 30,
       category: "Electronics",
     }),
     Product.create({
       name: "Shovel",
       description: "lowest tier of snow-removal tools",
       price: 1529,
-      quantity: 20,
+      quantity: 25,
     }),
   ]);
 
