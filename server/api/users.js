@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
-router.get("/all", requireToken, isAdmin, async (req, res, next) => {
+router.get("/all", async (req, res, next) => {
   try {
     const users = await User.findAll();
     res.json(users);

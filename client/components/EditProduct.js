@@ -18,7 +18,6 @@ class EditProduct extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // try {
     if (prevProps.singleProduct.id !== this.props.singleProduct.id) {
       console.log("this.props", this.props.singleProductId);
       const { name, description, imageUrl, price, quantity, category } =
@@ -33,10 +32,6 @@ class EditProduct extends Component {
       });
     }
   }
-  //   } catch (error) {
-  //     console.log("error in component did mount", error);
-  //   }
-  // }
 
   handleChange(evt) {
     this.setState({
