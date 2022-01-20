@@ -18,7 +18,7 @@ router.get("/:orderId/:productId", async (req, res, next) => {
   }
 });
 
-router.put("/:orderId/:productId", requireToken, async (req, res, next) => {
+router.put("/:orderId/:productId", async (req, res, next) => {
   try {
     const [orderProduct, created] = await OrderProduct.findOrCreate({
       where: {

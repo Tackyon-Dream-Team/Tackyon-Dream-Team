@@ -4,7 +4,7 @@ const {
 } = require("../db");
 const { requireToken, isAdmin } = require("./gatekeeper");
 
-router.get("/", requireToken, isAdmin, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
@@ -37,7 +37,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/:id/cart", requireToken, async (req, res, next) => {
+router.get("/:id/cart", async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
@@ -52,7 +52,7 @@ router.get("/:id/cart", requireToken, async (req, res, next) => {
   }
 });
 
-router.get("/:id/cartItems", requireToken, async (req, res, next) => {
+router.get("/:id/cartItems", async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
@@ -72,7 +72,7 @@ router.get("/:id/cartItems", requireToken, async (req, res, next) => {
   }
 });
 
-router.get("/:id/orders", requireToken, async (req, res, next) => {
+router.get("/:id/orders", async (req, res, next) => {
   try {
     const order = await Order.findAll({
       where: {
@@ -87,7 +87,7 @@ router.get("/:id/orders", requireToken, async (req, res, next) => {
   }
 });
 
-router.get("/:id/orders/:orderId", requireToken, async (req, res, next) => {
+router.get("/:id/orders/:orderId", async (req, res, next) => {
   try {
     const singleOrder = await Order.findAll({
       where: {
@@ -103,7 +103,7 @@ router.get("/:id/orders/:orderId", requireToken, async (req, res, next) => {
 });
 
 //edit cart - when we say we're editing a cart, we're really only changing the order status
-router.put("/:id/cart", requireToken, async (req, res, next) => {
+router.put("/:id/cart", async (req, res, next) => {
   try {
     const editOrder = await Order.findAll({
       where: {
@@ -117,7 +117,7 @@ router.put("/:id/cart", requireToken, async (req, res, next) => {
   }
 });
 
-router.post("/:id/cart", requireToken, async (req, res, next) => {
+router.post("/:id/cart", async (req, res, next) => {
   try {
     res.json(await OrderProduct.create(req.body));
   } catch (err) {
@@ -127,7 +127,7 @@ router.post("/:id/cart", requireToken, async (req, res, next) => {
 ///////////////////////////////////////////////////////////////////////
 
 //Changing activeOrder field from 'Incomplete' to 'Completed'
-router.put("/:id/cart", requireToken, async (req, res, next) => {
+router.put("/:id/cart", async (req, res, next) => {
   try {
     const checkoutOrder = await Order.findAll({
       where: {
@@ -167,7 +167,7 @@ router.put("/:orderId/cart/:productId", async (req, res, next) => {
 
 router.delete(
   "/:orderId/cart/:productId/",
-  requireToken,
+
   async (req, res, next) => {
     try {
       // const order = await Order.findOne({
@@ -197,7 +197,7 @@ router.delete(
 );
 
 //edit user
-router.put("/:id", requireToken, isAdmin, async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const editUser = await User.findByPk(req.params.id);
     res.json(await editUser.update(req.body));
