@@ -26,7 +26,7 @@ class AdminSingleProduct extends React.Component {
         <h3>Quantity: {product.quantity}</h3>
         <p>Description: {product.description}</p>
         <img src={product.imageUrl} className="SinglePicture" />
-        <EditProduct />
+        <EditProduct singleProductId={product.id} />
       </div>
     );
   }

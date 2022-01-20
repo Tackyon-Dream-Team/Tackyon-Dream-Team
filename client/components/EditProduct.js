@@ -6,13 +6,6 @@ class EditProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // name: "name",
-      // description: "description",
-      // imageUrl:
-      //   "https://www.minethatcraft.com/wp-content/uploads/2018/12/Gdfgdg-3D.png",
-      // price: "1234",
-      // quantity: "1",
-      // category: "None",
       name: "",
       description: "",
       imageUrl: "",
@@ -24,8 +17,10 @@ class EditProduct extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    try {
+  componentDidUpdate(prevProps) {
+    // try {
+    if (prevProps.singleProduct.id !== this.props.singleProduct.id) {
+      console.log("this.props", this.props.singleProductId);
       const { name, description, imageUrl, price, quantity, category } =
         this.props.singleProduct;
       this.setState({
@@ -36,10 +31,12 @@ class EditProduct extends Component {
         quantity,
         category,
       });
-    } catch (error) {
-      console.log("error in component did mount", error);
     }
   }
+  //   } catch (error) {
+  //     console.log("error in component did mount", error);
+  //   }
+  // }
 
   handleChange(evt) {
     this.setState({
