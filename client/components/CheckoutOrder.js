@@ -1,10 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import { getCart } from "../store/cart";
 import { getSingleOrder } from "../store/singleOrder";
 
 class CheckoutOrder extends React.Component {
   constructor(props) {
     super(props);
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -20,8 +22,20 @@ class CheckoutOrder extends React.Component {
     }
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.loadCartDetails(this.props.match.params.id)
+
+    console.log('handleeeeeeeeeeeeee', this.props)
+    const user = this.props.user
+    this.props.history.push(`/users/${user.id}/orders`)
+
+
+  }
+
   render() {
     const cart = this.props.cart;
+    const user = this.props.user || {name: '', id: 0}
     console.log('ooooooooo', cart)
     if (cart.length === 0) {
       return <div>Loading...</div>;
@@ -42,6 +56,9 @@ class CheckoutOrder extends React.Component {
                   ${Math.floor(price / 100)}.{price % 100}
                 </h3>
                 <div>{product.orderQuantity}</div>
+                <div>
+                  Product Total: $ {Math.floor((price * product.orderQuantity)/100)}.{price * product.orderQuantity  % 100}
+                </div>
                 <img src={imageUrl} className="SinglePicture" />
               </div>
             );
@@ -64,16 +81,20 @@ class CheckoutOrder extends React.Component {
             })} */}
           </div>
           <div id="Order-summary">
-          <div id="total">
-            Subtotal ({ cart.map(product => product.orderQuantity)
-                .reduce((acum, currVal) => acum + currVal)} item(s)): $
-              {
-                cart.map(product => product.product.price * product.orderQuantity)
-                .reduce((acum, currVal) => acum + currVal)/100
-                
-              }
+            <div id="total">
+              Subtotal ({ cart.map(product => product.orderQuantity)
+                  .reduce((acum, currVal) => acum + currVal)} item(s)): $
+                {
+                  cart.map(product => product.product.price * product.orderQuantity)
+                  .reduce((acum, currVal) => acum + currVal)/100
+                  
+                }
             </div>
-            <button>checkout</button>
+            <form onSubmit={this.handleSubmit}>
+              <button className="checkout-bttn" type="submit">
+                Checkout
+              </button>
+            </form>           
           </div>
         </>
       );
@@ -84,6 +105,7 @@ class CheckoutOrder extends React.Component {
 const mapState = (state) => {
   console.log("====STATE====", state);
   return {
+    user: state.auth,
     cart: state.singleOrder,
   };
 };
@@ -91,6 +113,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadSingleOrder: (id, orderId) => dispatch(getSingleOrder(id, orderId)),
+    loadCartDetails: (id) => dispatch(getCart(id))
   };
 };
 
