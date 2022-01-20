@@ -206,17 +206,30 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/:orderId/:productId", async (req, res, next) => {
+router.get('/:orderId/:productId', async(req, res, next) => {
+    try {
+        const orderProduct = await OrderProduct.findOne({
+            where: {
+                orderId: req.params.orderId,
+                productId: req.params.productId
+            }
+        })
+        res.json(orderProduct)
+    } catch(err) {
+        next(err)
+    }
+})
+
+//For ACTUALLY changing the field for acive
+router.put('/:userId/orders/:orderId', async (req, res, next) => {
   try {
-    const orderProduct = await OrderProduct.findOne({
-      where: {
-        orderId: req.params.orderId,
-        productId: req.params.productId,
-      },
-    });
-    res.json(orderProduct);
-  } catch (err) {
-    next(err);
+    const editCartItem = await Order.findByPk(req.params.orderId)
+    
+    console.log('____________CART ITEM IN EDIT ________________', editCartItem)
+    
+    res.json(await editCartItem.update(req.body))
+  } catch(err) {
+    next(err)
   }
 });
 
