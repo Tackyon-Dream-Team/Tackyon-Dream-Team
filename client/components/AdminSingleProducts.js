@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSingleProduct } from "../store/singleProduct";
+import EditProduct from "./EditProduct";
 
 class AdminSingleProduct extends React.Component {
   componentDidMount() {
@@ -16,14 +17,16 @@ class AdminSingleProduct extends React.Component {
 
   render() {
     const product = this.props.product;
-    console.log("!!!!!", product);
     return (
       <div id="single-Product">
         <h1>Name: {product.name}</h1>
-        <h3>Price: {product.price}</h3>
+        <h3>
+          Price: ${Math.floor(product.price / 100)}.{product.price % 100}
+        </h3>
         <h3>Quantity: {product.quantity}</h3>
         <p>Description: {product.description}</p>
         <img src={product.imageUrl} className="SinglePicture" />
+        <EditProduct />
       </div>
     );
   }

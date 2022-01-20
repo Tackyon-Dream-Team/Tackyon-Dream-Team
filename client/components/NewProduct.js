@@ -23,7 +23,7 @@ class NewProduct extends Component {
   }
   submitHandler(evt) {
     evt.preventDefault();
-    console.log("spread of state in submit: ", { ...this.state });
+    // console.log("spread of state in submit: ", { ...this.state });
     this.props.createProduct({ ...this.state });
     this.props.history.push(`/users/${this.props.user.id}/admin`);
   }
