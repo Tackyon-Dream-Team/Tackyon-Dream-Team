@@ -9,14 +9,17 @@ class Navbar extends React.Component {
   }
   render() {
     const { isLoggedIn, handleClick } = this.props;
-    const { user } = this.props || { name: "", id: 0 };
+    const { user } = this.props || {};
     return (
-      <div>
+      <>
+      <nav className="navbar" >
+        <div className="nav" >
+        <img src="logo.png" className="brand-logo" alt="logo" />
+        <div className="nav-items">
         <Link to="/">Home</Link>
         {isLoggedIn ? (
           <div>
             {/* The navbar will show these links after you log in */}
-            <h1>Welcome, {user.firstName}</h1>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
@@ -33,24 +36,38 @@ class Navbar extends React.Component {
               >
                 Admin
               </button>
+
             ) : (
               <div />
             )}
+                          <h1 align="center" id="welcome">Welcome, {user.firstName}</h1>
+
           </div>
         ) : (
-          <div>
+          <div id="loginLinks">
             {/* The navbar will show these links before you log in */}
+            <div>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
             <button onClick={() => {
               window.alert('Please Log In or Sign Up to view your cart')
             }}>View Cart</button>
-            {
-              //<button onClick={() => FINISH THIS VIEW CART BUTTON FOR GUEST USER
-            }
+            </div>
+            
           </div>
         )}
-      </div>
+        </div>
+        </div>
+      </nav>
+      <ul class="links-container">
+            <li class="link-item"><a href="#" class="link">home</a></li>
+            <li class="link-item"><a href="#" class="link">women</a></li>
+            <li class="link-item"><a href="#" class="link">men</a></li>
+            <li class="link-item"><a href="#" class="link">kids</a></li>
+            <li class="link-item"><a href="#" class="link">accessories</a></li>
+        </ul>
+      </>
+
     );
   }
 }

@@ -20,6 +20,7 @@
   "author": "Jack, Jay, Johnny, and David",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "compression": "^1.7.3",
@@ -54,7 +55,7 @@
     "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0",
     "supertest": "^4.0.2",
-    "webpack": "^5.15.0",
+    "webpack": "^5.0.0-rc.6",
     "webpack-cli": "^4.3.1"
   }
 }
