@@ -59,12 +59,14 @@ class Navbar extends React.Component {
         </div>
         </div>
       </nav>
-      <ul class="links-container">
-            <li class="link-item"><a href="#" class="link">home</a></li>
-            <li class="link-item"><a href="#" class="link">women</a></li>
-            <li class="link-item"><a href="#" class="link">men</a></li>
-            <li class="link-item"><a href="#" class="link">kids</a></li>
-            <li class="link-item"><a href="#" class="link">accessories</a></li>
+      <ul className="links-container">
+            <li className="link-item"><a href="#" className="link">home</a></li>
+            <li className="link-item"><a href="#" className="link">women</a></li>
+            <li className="link-item"><a href="#" className="link">men</a></li>
+            <li className="link-item"><a href="#" className="link">kids</a></li>
+            <li className="link-item"><a href="#" className="link">camp & hike</a></li>
+            <li className="link-item"><a href="#" className="link">climb</a></li>
+
         </ul>
       </>
 

@@ -40,14 +40,14 @@ const Product = db.define("product", {
   },
   category: {
     type: Sequelize.ENUM(
-      "Shoes",
-      "Electronics",
-      "Jackets",
-      "Sporting Equipment",
-      "Miscellaneous",
-      "None"
+      "men",
+      "women",
+      "kids",
+      "camp hike",
+      "accessories",
+      "none"
     ),
-    defaultValue: "None",
+    defaultValue: "none",
   },
 });
 

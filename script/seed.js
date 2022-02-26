@@ -4,6 +4,7 @@ const {
   db,
   models: { User, Product, Order, OrderProduct },
 } = require("../server/db");
+const allProducts = require("./productArray")
 
 /**
  * seed - this function clears the database, updates tables to
@@ -12,6 +13,7 @@ const {
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
+  console.log("allProductsssssss", allProducts)
 
   // Creating Users
   const users = await Promise.all([
@@ -67,41 +69,43 @@ async function seed() {
     Order.create({activeOrder: 'Incomplete'}),
     Order.create({activeOrder: 'Incomplete'}),
   ])
+
+  const products = await Promise.all(allProducts.map(product => Product.create(product)))
   
-  const products = await Promise.all([
-    Product.create({
-      name: "Rain Jacket",
-      description: "a jacket that gives you the power to stay dry",
-      price: 4999,
-      quantity: 20,
-    }),
-    Product.create({
-      name: "Snow Boots",
-      description: "keeps the feet at exactly 70°F at all times",
-      price: 11999,
-      quantity: 15
-    }),
-    Product.create({
-      name: "Tent",
-      description: "hide yourself from ET when out in the wild",
-      price: 59999,
-      quantity: 10,
-      category: "Sporting Equipment",
-    }),
-    Product.create({
-      name: "Phone",
-      description: "call mama bear with this amazing product",
-      price: 99999,
-      quantity: 30,
-      category: "Electronics",
-    }),
-    Product.create({
-      name: "Shovel",
-      description: "lowest tier of snow-removal tools",
-      price: 1529,
-      quantity: 25,
-    }),
-  ]);
+  // const products = await Promise.all([
+  //   Product.create({
+  //     name: "Rain Jacket",
+  //     description: "a jacket that gives you the power to stay dry",
+  //     price: 4999,
+  //     quantity: 20,
+  //   }),
+  //   Product.create({
+  //     name: "Snow Boots",
+  //     description: "keeps the feet at exactly 70°F at all times",
+  //     price: 11999,
+  //     quantity: 15
+  //   }),
+  //   Product.create({
+  //     name: "Tent",
+  //     description: "hide yourself from ET when out in the wild",
+  //     price: 59999,
+  //     quantity: 10,
+  //     category: "Sporting Equipment",
+  //   }),
+  //   Product.create({
+  //     name: "Phone",
+  //     description: "call mama bear with this amazing product",
+  //     price: 99999,
+  //     quantity: 30,
+  //     category: "Electronics",
+  //   }),
+  //   Product.create({
+  //     name: "Shovel",
+  //     description: "lowest tier of snow-removal tools",
+  //     price: 1529,
+  //     quantity: 25,
+  //   }),
+  // ]);
 
   //user 1 has previous orders 1, 2
   await completedOrders[2].setUser(users[0])
