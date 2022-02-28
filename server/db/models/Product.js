@@ -45,6 +45,7 @@ const Product = db.define("product", {
       "kids",
       "camp hike",
       "accessories",
+      "resources",
       "none"
     ),
     defaultValue: "none",
